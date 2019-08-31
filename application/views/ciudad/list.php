@@ -25,14 +25,12 @@
               <table class="table table-hover">
                 <thead>
                   <th>Nombre</th>
-                  <th>Pais</th>
                 </thead>
                 <tbody>
 
                   <?php foreach ($ciudades as $ciudad): ?>
                   <tr>
                     <td><?php echo $ciudad->nombre; ?></td>
-                    <td><?php echo $ciudad->pais; ?></td>
                     <td>
                       <a href="<?= base_url('ciudades/edit/'.$ciudad->id); ?>" class="btn btn-xs" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                       <a href="<?= base_url('ciudades/delete/'.$ciudad->id); ?>" class="btn btn-xs" href="#" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
