@@ -49,10 +49,12 @@ class Sesion extends CI_Controller {
 			//Autenticar contra la base
 			if (!empty($usuario) && $email == $usuario->email && $this->verificar_pwd($password, $usuario->pwd)){
 				// Setear variables de sesion
-				$username = $usuario->usuario;
-				$rol = $usuario->roles_id;
+				//print_r($usuario);
+				//die;
+				$username = $usuario->nombre;
+				$rol = $usuario->rol_id;
 				$rol_name = ($rol==2)?'Administrador':'Cliente';
-
+	
 				$newdata = array(
 					'username'  => $username,
 					'user_id'	=> $usuario->id,

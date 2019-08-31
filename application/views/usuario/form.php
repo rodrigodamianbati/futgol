@@ -33,20 +33,6 @@
             <div class="form-group">
               <div class="row">
                 <div class="col-md-6">
-                  <label for="nombre">Usuario</label>
-                  <input type="text" class="form-control" id="usuario" name="usuario"  placeholder="Usuario" value="<?= ($usuario)?$usuario->usuario:''; ?>">
-                  <?= form_error('usuario', '<p class="text-danger">'); ?>
-                </div>
-                <div class="col-md-6">
-                  <label for="email">Email</label>
-                  <input type="email" name="email" id="email" class="form-control" placeholder="Email" value="<?= ($usuario)?$usuario->email:''; ?>">
-                  <?= form_error('email', '<p class="text-danger">'); ?>
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="row">
-                <div class="col-md-6">
                 <label for="nombre">Nombre</label>
                   <input type="text" class="form-control" id="nombre" name="nombre"  placeholder="Nombre" value="<?= ($usuario)?$usuario->nombre:''; ?>">
                   <?= form_error('nombre', '<p class="text-danger">'); ?>
@@ -58,6 +44,16 @@
                 </div>
               </div>
             </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="email">Email</label>
+                  <input type="email" name="email" id="email" class="form-control" placeholder="Email" value="<?= ($usuario)?$usuario->email:''; ?>">
+                  <?= form_error('email', '<p class="text-danger">'); ?>
+                </div>
+              </div>
+            </div>
+
           </div>
           <!-- /.box-body -->
 

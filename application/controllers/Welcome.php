@@ -8,11 +8,7 @@ class Welcome extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->helper('url_helper');
-		$this->load->model('alojamientos_model');
 		$this->load->model('ciudades_model');
-		$this->load->model('reservas_model');
-		$this->load->model('imagenes_model');
-		$this->load->model('calificaciones_model');
 
 		$this->load->library('form_validation');
 		$this->load->library('pagination');

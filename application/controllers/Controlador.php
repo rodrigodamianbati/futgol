@@ -33,7 +33,7 @@ class Controlador extends CI_Controller {
 		$this->entidad = $entidad;
 
 		$this->load->model($this->model, 'modelo');
-		$this->load->model('mensajes_model');
+		//$this->load->model('mensajes_model');
 		$this->load->helper('url_helper');
 		$this->load->library('form_validation');
 		$this->load->library('session');
@@ -56,8 +56,9 @@ class Controlador extends CI_Controller {
 	 * Retorna un formulario para editar/crear un objeto de la clase dado el objeto
 	 */
 	public function mostrarForm($data){
-		$cabecera['mensajes'] = $this->mensajes_model->countByUserId($this->session->data['user_id']);
-		$cabecera['mensajesUsuario'] = $this->mensajes_model->findMensajesByUsuarioId($this->session->data['user_id']);
+		//$cabecera['mensajes'] = $this->mensajes_model->countByUserId($this->session->data['user_id']);
+		//$cabecera['mensajesUsuario'] = $this->mensajes_model->findMensajesByUsuarioId($this->session->data['user_id']);
+		$cabecera="";
 		$this->load->view('dash/header', $cabecera);
 		$this->load->view('dash/sidebar');
 		$this->load->view($this->formEntidad, $data);
@@ -68,8 +69,9 @@ class Controlador extends CI_Controller {
 	 *  Dada una lista de objetos Retorna el formulario para verlos
 	 */ 
 	public function mostrarLista($data){
-		$cabecera['mensajes'] = $this->mensajes_model->countByUserId($this->session->data['user_id']);
-		$cabecera['mensajesUsuario'] = $this->mensajes_model->findMensajesByUsuarioId($this->session->data['user_id']);
+		//$cabecera['mensajes'] = $this->mensajes_model->countByUserId($this->session->data['user_id']);
+		//$cabecera['mensajesUsuario'] = $this->mensajes_model->findMensajesByUsuarioId($this->session->data['user_id']);
+		$cabecera="";
 		$this->load->view('dash/header', $cabecera);
 		$this->load->view('dash/sidebar');
 		$this->load->view($this->formLista, $data);

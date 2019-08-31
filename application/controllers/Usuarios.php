@@ -17,7 +17,7 @@ class Usuarios extends CI_Controller {
 		$this->entidad = 'usuario';
 
 		$this->load->model($this->model, 'modelo');
-		$this->load->model('mensajes_model');
+		//$this->load->model('mensajes_model');
 
 		$this->load->helper('url_helper');
 		$this->load->library('form_validation');
@@ -55,8 +55,9 @@ class Usuarios extends CI_Controller {
 
 			$data[$this->lista] = $this->modelo->findAll();
 
-			$cabecera['mensajes'] = $this->mensajes_model->countByUserId($this->session->data['user_id']);
-			$cabecera['mensajesUsuario'] = $this->mensajes_model->findMensajesByUsuarioId($this->session->data['user_id']);			
+			//$cabecera['mensajes'] = $this->mensajes_model->countByUserId($this->session->data['user_id']);
+			//$cabecera['mensajesUsuario'] = $this->mensajes_model->findMensajesByUsuarioId($this->session->data['user_id']);
+			$cabecera="";			
 			$this->load->view('dash/header', $cabecera);
 			$this->load->view('dash/sidebar');
 			$this->load->view($this->formLista, $data);
@@ -70,9 +71,9 @@ class Usuarios extends CI_Controller {
 		//if ($this->puede()){
 		if ($this->tieneSesion()){
 			$data[$this->entidad] = $this->modelo->findById($id);
-
-			$cabecera['mensajes'] = $this->mensajes_model->countByUserId($this->session->data['user_id']);
-			$cabecera['mensajesUsuario'] = $this->mensajes_model->findMensajesByUsuarioId($this->session->data['user_id']);			
+			$cabecera="";
+			//$cabecera['mensajes'] = $this->mensajes_model->countByUserId($this->session->data['user_id']);
+			//$cabecera['mensajesUsuario'] = $this->mensajes_model->findMensajesByUsuarioId($this->session->data['user_id']);			
 			$this->load->view('dash/header', $cabecera);
 			$this->load->view('dash/sidebar');
 			$this->load->view($this->formEntidad, $data);
@@ -96,7 +97,7 @@ class Usuarios extends CI_Controller {
 
 
 	private function validar_modif(){
-		$this->form_validation->set_rules('usuario', 'Usuario', 'required');
+		//$this->form_validation->set_rules('usuario', 'Usuario', 'required');
 		$this->form_validation->set_rules('email', 'Email', 'required');
 	}
 
@@ -134,7 +135,7 @@ class Usuarios extends CI_Controller {
 		$this->validar();
 		$postData = new Usuarios_model();
 		$postData->id = $this->input->post('id');
-		$postData->usuario = $this->input->post('usuario');
+		//$postData->usuario = $this->input->post('usuario');
 		$postData->email = $this->input->post('email');
 		$postData->pwd = $this->input->post('password');
 
@@ -175,7 +176,7 @@ class Usuarios extends CI_Controller {
 		$this->validar_modif();
 		$postData = new Usuarios_model();
 		$postData->id = $this->input->post('id');
-		$postData->usuario = $this->input->post('usuario');
+		//$postData->usuario = $this->input->post('usuario');
 		$postData->email = $this->input->post('email');
 		$postData->nombre = $this->input->post('nombre');
 		$postData->apellido = $this->input->post('apellido');
@@ -194,8 +195,8 @@ class Usuarios extends CI_Controller {
 			$this->session->set_flashdata('errors', validation_errors());
 			$data[$this->entidad] = $postData;
 
-			$cabecera['mensajes'] = $this->mensajes_model->countByUserId($this->session->data['user_id']);
-			$cabecera['mensajesUsuario'] = $this->mensajes_model->findMensajesByUsuarioId($this->session->data['user_id']);	
+			//$cabecera['mensajes'] = $this->mensajes_model->countByUserId($this->session->data['user_id']);
+			//$cabecera['mensajesUsuario'] = $this->mensajes_model->findMensajesByUsuarioId($this->session->data['user_id']);	
 			$this->load->view('dash/header');
 			$this->load->view('dash/sidebar');
 			$this->load->view($this->formEntidad, $data);
@@ -207,7 +208,8 @@ class Usuarios extends CI_Controller {
 		if ($this->session->data['rol']==2){
 			redirect($this->lista);
 		}
-		redirect('reservas');
+		//redirect('reservas');
+		redirect('ciudades');
 
 	}
 

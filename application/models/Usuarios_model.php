@@ -5,14 +5,14 @@ class Usuarios_model extends Objeto_model {
 
     public function __construct()
     {
-        parent::__construct('usuarios', 'id');
+        parent::__construct('usuario', 'id');
     }
 
 
     private function queryUsuarios(){
-        $this->db->select('u.id, u.usuario, u.email, u.nombre, u.apellido, u.activo, r.nombre as rol');
-        $this->db->from('Usuarios u');
-        $this->db->join('roles r', 'u.roles_id = r.id');
+        $this->db->select('u.id, u.email, u.nombre, u.apellido, u.activo, r.nombre as rol');
+        $this->db->from('Usuario u');
+        $this->db->join('rol r', 'u.rol_id = r.id');
         //$this->db->join('reservas r', 'r.Usuarios_id = u.id');
     }
 
@@ -24,7 +24,7 @@ class Usuarios_model extends Objeto_model {
     }
 
     public function findByEmail($email){
-        $query = $this->db->get_where('usuarios', array('email' => $email, 'activo' => 1));
+        $query = $this->db->get_where('usuario', array('email' => $email, 'activo' => 1));
         return $query->row();
     }
 
@@ -44,13 +44,13 @@ class Usuarios_model extends Objeto_model {
 
 	public function subir($id){
 		$user = $this->findById($id);
-		$user->roles_id = 2;
+		$user->rol_id = 2;
 		$this->update($user, $id);
 	}
 
 	public function bajar($id){
 		$user = $this->findById($id);
-		$user->roles_id = 1;
+		$user->rol_id = 1;
 		$this->update($user, $id);
 	}	
 
