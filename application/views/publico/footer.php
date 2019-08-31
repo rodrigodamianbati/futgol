@@ -3,8 +3,8 @@
 			<div class="container">
 				<div class="row row-pb-md">
 					<div class="col-md-3 colorlib-widget">
-						<h4>AlojAR</h4>
-						<p>Proyecto de Software 2018.<br>Licenciatura en Sistemas.</p>
+						<h4>FutGOL</h4>
+						<p>Ingeniería de Sofware 3.<br>Licenciatura en Sistemas.</p>
 						<p>UNRN. Viedma, Río Negro.</p>
 						<p>
 							<ul class="colorlib-social-icons">
@@ -19,8 +19,7 @@
 					<div class="col-md-3 col-md-push-1">
 						<h4>Contacto</h4>
 						<ul class="colorlib-footer-links">
-							<li>Alvaro Bayon, <br> Viedma, Río Negro</li>
-							<li><a href="mailto:abayon@gmail.com">abayon@gmail.com</a></li>
+							<li>Alvaro Bayon, <br>Elías Relmuan, Nahuel Pichón, <br>Nicolás Dell, Rodrigo Batillier<br><br> Viedma, Río Negro.</li>
 						</ul>
 					</div>
 				</div>

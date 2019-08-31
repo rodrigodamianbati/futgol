@@ -11,7 +11,7 @@
 				   			<div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 slider-text">
 				   				<div class="slider-text-inner text-center">
 				   					<h2>A un clic de distancia</h2>
-				   					<h1>Encuentra tu destino soñado</h1>
+				   					<h1>Encontrá tu cancha favorita</h1>
 				   				</div>
 				   			</div>
 				   		</div>
@@ -23,8 +23,8 @@
 			   			<div class="row">
 				   			<div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 slider-text">
 				   				<div class="slider-text-inner text-center">
-				   					<h2>Los mejores alojamientos</h2>
-				   					<h1>En todo el mundo</h1>
+				   					<h2>Las mejores canchas</h2>
+				   					<h1>En todo momento</h1>
 				   				</div>
 				   			</div>
 				   		</div>
@@ -37,7 +37,7 @@
 				   			<div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 slider-text">
 				   				<div class="slider-text-inner text-center">
 				   					<h2>Encontra en nuestra plataforma</h2>
-				   					<h1>Los mejores destinos</h1>
+				   					<h1>Los mejores lugares</h1>
 				   				</div>
 				   			</div>
 				   		</div>
@@ -50,7 +50,7 @@
 				   			<div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 slider-text">
 				   				<div class="slider-text-inner text-center">
 				   					<h2>Planea</h2>
-				   					<h1>Tu mejor viaje</h1>
+				   					<h1>Tu día de fútbol</h1>
 				   				</div>
 				   			</div>
 				   		</div>
@@ -69,7 +69,7 @@
 					<div class="search-wrap">
 						<div class="container">
 							<ul class="nav nav-tabs">
-								<li class="active"><a data-toggle="tab" href="#hotel"><i class="flaticon-resort"></i> Buscar Alojamientos</a></li>
+								<li class="active"><a data-toggle="tab" href="#hotel"><i class="flaticon-resort"></i> Buscar Turnos</a></li>
 							</ul>
 						</div>
 						<div class="tab-content">
