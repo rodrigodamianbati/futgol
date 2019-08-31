@@ -2,10 +2,10 @@
   <footer class="main-footer">
     <!-- To the right -->
     <div class="pull-right hidden-xs">
-      Proyecto de Software 2018, UNRN
+      Ingeniería de software 3 - 2019, UNRN
     </div>
     <!-- Default to the left -->
-    Alvaro Bayon.
+    Alvaro Bayon, Elías Relmuan, Nahuel Pichón, Nicolás Dell, Rodrigo Batillier.
   </footer>
 
   

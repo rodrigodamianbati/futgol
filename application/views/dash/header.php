@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AlojAR</title>
+  <title>FutGOL</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="<?= base_url(); ?>resources/components/bootstrap/dist/css/bootstrap.min.css">
@@ -67,7 +67,7 @@ desired effect
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>LT</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg">Aloj<b>AR</b></span>
+      <span class="logo-lg">Fut<b>GOL</b></span>
     </a>
 
     <!-- Header Navbar -->
@@ -79,47 +79,6 @@ desired effect
       <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-
-          <!-- Messages: style can be found in dropdown.less-->
-          <li class="dropdown messages-menu">
-            <!-- Menu toggle button -->
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-envelope-o"></i>
-              <span class="label label-success"><?= $mensajes ?></span>
-            </a>
-            <ul class="dropdown-menu">
-              <?php if($mensajes>0){?>
-              <li class="header">Tiene <?= $mensajes ?> mensaje <?php if($mensajes>1){?>nuevos.<?php }else{?>nuevo.<?php } ?>  </li>
-              <li>
-                <!-- inner menu: contains the messages -->
-                <ul class="menu">
-
-                  <?php foreach ($mensajesUsuario as $mensaje): ?>
-                  <li><!-- start message -->
-                    <a href="<?= base_url('reservasPedidas/mensajes/'.$mensaje->reservas_id.'/'.$mensaje->usuarios_id); ?>">
-                      <!-- Message title and timestamp -->
-                      <h4>
-                        <?= $mensaje->nombre ?> <?= $mensaje->apellido ?>
-                        <small><i class="fa fa-clock-o"></i> <?= $mensaje->fechaHora ?></small>
-                      </h4>
-                      <!-- The message -->
-                      <p><?= $mensaje->texto ?></p>
-                    </a>
-                  </li>
-                  <!-- end message -->
-                  <?php endforeach; ?>
-                </ul>
-                <!-- /.menu -->
-              </li>
-
-              <?php } else{ ?>
-              <li class="header">No tiene mensajes sin leer.</li>
-              <?php } ?>
-
-              <li class="footer"></li>
-            </ul>
-          </li>
-          <!-- /.messages-menu -->
 
           <!-- User Account Menu -->
           <li class="dropdown user user-menu">
@@ -144,7 +103,9 @@ desired effect
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
+                  <!--
                   <a href="<?= base_url('usuarios/edit');?>/<?= $this->session->data['user_id']; ?>" class="btn btn-default btn-flat">Perfil</a>
+                  -->
                 </div>
                 <div class="pull-right">
                   <a href="<?= base_url('sesion/logout');?>" class="btn btn-default btn-flat">Cerrar sesión</a>

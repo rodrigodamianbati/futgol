@@ -26,18 +26,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php if ($this->session->data['rol']==2){ ?>
         <li class="header">ADMINISTRACION</li>
           <li class="active"><a href="<?= base_url('ciudades'); ?>"><i class="fa fa-table"></i> <span>Ciudades</span></a></li>
-          <li class="active"><a href="<?= base_url('paises'); ?>"><i class="fa fa-table"></i> <span>Países</span></a></li>
-          <li class="active"><a href="<?= base_url('servicios'); ?>"><i class="fa fa-table"></i> <span>Servicios</span></a></li>
-          <li class="active"><a href="<?= base_url('tipos_alojamiento'); ?>"><i class="fa fa-table"></i> <span>Tipos de alojamiento</span></a></li>
-          <li class="active"><a href="<?= base_url('usuarios'); ?>"><i class="fa fa-address-book"></i> <span>Usuarios</span></a></li>
+          <li class="active"><a href="#"><i class="fa fa-address-book"></i> <span>Usuarios</span></a></li>
         <?php } ?>
-        <li class="header">CLIENTE</li>
-        <li class="active"><a href="<?= base_url('reservas'); ?>"><i class="fa fa-shopping-bag"></i> <span>Mis reservas</span></a></li>
-        <li class="active"><a href="<?= base_url('pagos'); ?>"><i class="fa fa-money"></i> <span>Mis pagos</span></a></li>
+        <li class="header">JUGADOR</li>
+        <li class="active"><a href="#"><i class="fa fa-shopping-bag"></i> <span>Mis reservas</span></a></li>
+        <li class="active"><a href="#"><i class="fa fa-money"></i> <span>Mis invitaciones</span></a></li>
         <li class="header">PROPIETARIO</li>
-        <li class="active"><a href="<?= base_url('alojamientos'); ?>"><i class="fa fa-home"></i> <span>Mis Alojamientos</span></a></li>
-        <li class="active"><a href="<?= base_url('reservasPedidas'); ?>"><i class="fa fa-sun-o"></i> <span>Pedidos de reserva</span></a></li>
-        <li class="active"><a href="<?= base_url('pagosRecibidos'); ?>"><i class="fa fa-dollar"></i> <span>Pagos recibidos</span></a></li>
+        <li class="active"><a href="#"><i class="fa fa-home"></i> <span>Mis complejos</span></a></li>
+        <li class="active"><a href="#"><i class="fa fa-sun-o"></i> <span>Pedidos de reserva</span></a></li>
 
 
       </ul>
