@@ -31,8 +31,9 @@ class Welcome extends CI_Controller {
 		$datosSesion = array(
 			'formulario'  => 'indice'
 		);
+
 		$this->session->set_userdata($datosSesion);
-		
+
 		$this->load->view('publico/header');
 		$this->load->view('publico/index', $data);
 		$this->load->view('publico/footer');

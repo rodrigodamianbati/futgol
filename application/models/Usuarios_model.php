@@ -26,7 +26,7 @@ class Usuarios_model extends Objeto_model {
     public function findByEmail($email){
         $query = $this->db->get_where('usuario', array('email' => $email, 'activo' => 1));
         return $query->row();
-    }
+	}
 
 	public function toEntityObject($id, $u, $email, $pwd){
 		$usuario = new Usuarios_model();
