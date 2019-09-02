@@ -77,11 +77,7 @@ $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
 	'username' => 'root',
-<<<<<<< Updated upstream
-	'password' => '',
-=======
 	'password' => '123',
->>>>>>> Stashed changes
 	'database' => 'futgol',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
