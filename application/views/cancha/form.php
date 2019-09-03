@@ -47,8 +47,9 @@
                   <?= form_error('jugadores', '<p class="text-danger">'); ?>
                 </div>
                 <div class="col-md-6">
-                  <label for="abierta">Abierta</label>
-                  <input type="text"  id="abierta" name="abierta"  value="<?= ($cancha)?$cancha->abierta:''; ?>">
+                  <label for="abierta">Abierta</label><br>
+                  <input type="radio"  id="abierta" name="abierta"  value="1" <?= ($cancha && $cancha->abierta == 1)? 'checked':''; ?>> &nbsp;SI<br>
+                  <input type="radio"  id="abierta" name="abierta"  value="0" <?= ($cancha && $cancha->abierta == 0)? 'checked':''; ?>> &nbsp;NO<br>
                   <?= form_error('abierta', '<p class="text-danger">'); ?>
                 </div>
               </div>
@@ -56,8 +57,8 @@
             <div class="form-group">
               <div class="row">
                 <div class="col-md-8">
-                  <label for="caracteristicas">Caracteristicas</label>
-                  <textarea type="text" class="form-control" id="caracteristicas" name="caracteristicas"  placeholder="Caracteristicas" value="<?= ($cancha)?$cancha->caracteristicas:''; ?>"> </textarea>
+                  <label for="caracteristicas">Caracteristicas Adicionales</label>
+                  <textarea type="text" class="form-control" id="caracteristicas" name="caracteristicas"  placeholder="Caracteristicas"><?= ($cancha)?$cancha->caracteristicas:''; ?></textarea>
                   <?= form_error('caracteristicas', '<p class="text-danger">'); ?>
                 </div>
                 <div class="col-md-2">
@@ -74,7 +75,7 @@
 
           <div class="box-footer">
             <button type="submit" class="btn btn-primary">Guardar</button>
-            <a class="btn btn-default" href="<?= base_url();?>canchas" role="button">Volver</a>
+            <a class="btn btn-default" href="<?= base_url();?>canchas/misCanchas" role="button">Volver</a>
           </div>
         </form>
       </div>
