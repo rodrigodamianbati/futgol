@@ -35,7 +35,7 @@
                   <tr>
                     <td><?php echo $cancha->complejo_nombre; ?></td>
                     <td><?php echo $cancha->jugadores; ?></td>
-                    <td><?php echo $cancha->abierta; ?></td>
+                    <td><?php echo ($cancha->abierta == 1)?'SI':'NO'; ?></td>
                     <td><?php echo $cancha->caracteristicas; ?></td>
                     <td><?php echo $cancha->superficie_nombre; ?></td>
                     <td>

@@ -34,6 +34,7 @@ class Canchas extends Protegido {
 		$this->form_validation->set_rules('complejo_id', 'Complejo', 'required');
 		$this->form_validation->set_rules('jugadores', 'Jugadores', 'required|numeric');
 		$this->form_validation->set_rules('abierta', 'Abierta', 'required');
+        $this->form_validation->set_rules('tipo_superficie_id', 'Tipo de superficie', 'required');
 		$this->form_validation->set_rules('caracteristicas', 'Caracteristicas', 'max_length[500]');
 
 	}
