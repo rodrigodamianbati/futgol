@@ -69,7 +69,7 @@
 					<div class="search-wrap">
 						<div class="container">
 							<ul class="nav nav-tabs">
-								<li class="active"><a data-toggle="tab" href="#hotel"><i class="flaticon-resort"></i> Buscar Turnos</a></li>
+								<li class="active"><a data-toggle="tab" href="#hotel"><i class="flaticon-resort"></i> Buscar un Turno</a></li>
 							</ul>
 						</div>
 						<div class="tab-content">
@@ -88,29 +88,28 @@
 				              	 </div>
 				                <div class="col-md-3">
 				                  <div class="form-group">
-				                    <label for="date">Desde:</label>
+				                    <label for="date">Fecha:</label>
 				                    <div class="form-field">
 				                      <i class="icon icon-calendar2"></i>
-				                      <input type="date" id="desde" name="desde" class="form-control" placeholder="Fecha de entrada">
+				                      <input type="date" id="desde" name="desde" class="form-control" placeholder="Día del partido">
 															<?= form_error('desde', '<p class="text-danger">'); ?>
 														</div>
 				                  </div>
 				                </div>
 				                <div class="col-md-3">
 				                  <div class="form-group">
-				                    <label for="date">Hasta:</label>
+				                    <label for="date">Hora:</label>
 				                    <div class="form-field">
-				                      <i class="icon icon-calendar2"></i>
-				                      <input type="date" id="hasta" name="hasta" class="form-control" placeholder="Fecha de salida">
+				                      <input type="text" id="hasta" name="hasta" class="form-control" placeholder="Hora del partido">
 															<?= form_error('hasta', '<p class="text-danger">'); ?>
 														</div>
 				                  </div>
 				                </div>
 				                <div class="col-md-2">
 				                  <div class="form-group">
-				                    <label for="guests">Pasajeros</label>
+				                    <label for="guests">Jugadores</label>
 				                    <div class="form-field">
-									  					<input type="text" id="pasajeros" name="pasajeros" class="form-control" placeholder="Personas" value="2">
+									  					<input type="text" id="pasajeros" name="pasajeros" class="form-control" placeholder="Personas" value="5">
 															<?= form_error('pasajeros', '<p class="text-danger">'); ?>
 														</div>
 				                  </div>
