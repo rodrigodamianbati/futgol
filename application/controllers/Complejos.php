@@ -78,4 +78,70 @@ class Complejos extends Protegido {
 		parent::mostrarLista($data);
 	}
 
+	public function imagenes(){
+
+			$id_complejo = $_GET['id_complejo'];
+			$cabecera="";
+			$data['imagenes'] = $this->complejos_model->imagenes($id_complejo);
+			$data['id_complejo'] = $id_complejo;
+			$this->load->view('fine_uploader_head', $cabecera);
+			$this->load->view('dash/sidebar');
+			$this->load->view('complejo/administracion_fotos', $data);
+			$this->load->view('dash/footer');
+	}
+
+	public function subir_fotos(){
+	
+		$config['upload_path'] = './uploads/';
+
+        $config['allowed_types'] = 'gif|jpg|png';
+        $config['max_size'] = 2048000;
+        $config['max_width'] = 1024;
+		$config['max_height'] = 768;
+        $numRandom = rand(); //genero un numero random
+        $numRandom1 = rand(); //genero otro numero random
+        $nombre = $numRandom . $numRandom1 . $_FILES['qqfile']['name']; //se lo concateno al principio del nombre del archivo para no perder la extension
+        $config['file_name'] = $nombre; //cambio el nombre del archivo
+
+		$this->load->library('upload', $config); //subo el archivo al servido
+		
+		
+
+        if (!$this->upload->do_upload('qqfile')) {
+
+            $estado = array('error' => $this->upload->display_errors());
+
+            http_response_code(500);
+        } else {
+
+            $path = '../uploads/' . $nombre;
+
+            //$id = $_GET['id'];
+
+            $this->nuevoPathFoto($_GET['id_complejo'], $path, $nombre);
+            $estado = array('success' => true);
+
+        }
+
+        $estado_encode = json_encode($estado);
+
+		echo $estado_encode;
+    }
+
+    private function nuevoPathFoto($id_complejo, $path, $nombre)
+    {	
+        $this->complejos_model->nuevaFoto($id_complejo, $path, $nombre);
+	}
+	
+	public function eliminar_imagen(){
+		
+
+		$id_imagen = $_POST['id_imagen'];
+		$id_complejo = $_POST['id_complejo'];
+		$this->complejos_model->eliminar_imagen($id_imagen);
+
+		redirect('/complejos/imagenes?id_complejo='.$id_complejo, 'refresh');
+	}
+	
+
 }

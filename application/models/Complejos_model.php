@@ -36,6 +36,23 @@ class Complejos_model extends Objeto_model {
         return $query->result();
     }
 
+    public function imagenes($idComplejo){
+        $this->db->select('*');
+        $this->db->from('imagen_complejo ic');
+        $this->db->where('ic.complejo_id', $idComplejo);
+        $query = $this->db->get();
+        return $query->result();
+    }
 
+    public function nuevaFoto($id_complejo, $path, $nombre){
+       
+        //$this->db->insert('imagen_complejo', $data);
 
+        $this->db->query("INSERT INTO `imagen_complejo` (nombre, path, complejo_id) VALUES('$nombre', '$path', $id_complejo)");
+    }
+
+    public function eliminar_imagen($id_imagen){
+        $this->db->where('id', $id_imagen);
+        $this->db->delete('imagen_complejo');
+    }
 }
