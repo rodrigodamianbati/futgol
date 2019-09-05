@@ -100,7 +100,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" id="confirm">Borrar</button>
+        <button type="button" class="btn btn-danger" id="confirm" onclick="eliminarImagen();">Borrar</button>
       </div>
     </div>
   </div>
@@ -111,6 +111,12 @@
 
     function clickeado(){
       idclickeado = event.srcElement.id;
+    }
+
+    function eliminarImagen(){
+        $.post("<?php echo base_url()?>complejos/eliminar_imagen",{ id_imagen: idclickeado, id_complejo : '<?php echo $id_complejo?>'}, function(){
+            location.reload();
+        });
     }
 
     <?php 
@@ -135,13 +141,8 @@
       var form = $(e.relatedTarget).closest('form');
       $(this).find('.modal-footer #confirm').data('form', form);
   });
- 
-  <!-- Form confirm (yes/ok) handler, submits form -->
-  $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
-      //$(this).data('form').submit();
-      $.post("<?php echo base_url()?>complejos/eliminar_imagen",{ id_imagen: idclickeado, id_complejo : '<?php echo $id_complejo?>'});
-      location.reload();
-  });
+
+
 </script>
 
 

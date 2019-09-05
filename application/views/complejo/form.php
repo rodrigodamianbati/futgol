@@ -60,7 +60,7 @@
 
               <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Guardar</button>
-                <a class="btn btn-default" href="<?= base_url();?>complejos/misComplejos" role="button">Volver</a>
+                <a class="btn btn-default" href="<?= base_url();?>complejos" role="button">Volver</a>
               </div>
             </form>
           </div>

@@ -4,8 +4,8 @@
  */
 class Objeto_model extends CI_Model {
 
-    private $tabla = '';
-    private $id = '';
+    protected $tabla = '';
+    protected $id = '';
 
     /**
      * Constructor
@@ -19,6 +19,7 @@ class Objeto_model extends CI_Model {
         $this->id = $id;
         $this->load->database();
     }
+
 
     /**
      * Retorna todos los objetos de la clase

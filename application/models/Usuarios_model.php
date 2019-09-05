@@ -11,7 +11,7 @@ class Usuarios_model extends Objeto_model {
 
     private function queryUsuarios(){
         $this->db->select('u.id, u.email, u.nombre, u.apellido, u.activo, r.nombre as rol');
-        $this->db->from('Usuario u');
+        $this->db->from('usuario u');
         $this->db->join('rol r', 'u.rol_id = r.id');
         //$this->db->join('reservas r', 'r.Usuarios_id = u.id');
     }

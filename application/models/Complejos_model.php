@@ -14,7 +14,7 @@ class Complejos_model extends Objeto_model {
      * Retorna una entidad
      */
     public function toEntityObject($id, $ciudad_id, $nombre, 
-            $direccion, $telefono, $email){
+        $direccion, $telefono, $email){
 		$entidad = new Complejos_model();
 		$entidad->id = $id;
         $entidad->ciudad_id = $ciudad_id;

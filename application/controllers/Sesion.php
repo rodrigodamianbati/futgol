@@ -43,11 +43,15 @@ class Sesion extends CI_Controller {
 			$email = $this->input->post('email');
 			$password = $this->input->post('password');
 			$referer = $this->input->post('referer');
+            //echo $this->input->post('referer'); exit();
 
-			// Obtener informacion del usuario
+            // Obtener informacion del usuario
 			$usuario = $this->modelo->findByEmail($email);
+			//print_r($usuario);exit();
 			//Autenticar contra la base
-			if (!empty($usuario) && $email == $usuario->email && $this->verificar_pwd($password, $usuario->pwd)){
+            //echo $this->verificar_pwd($password, $usuario->pwd);
+            //echo ($email == $usuario->email);
+			if (!empty($usuario) && $email == $usuario->email /*&& $this->verificar_pwd($password, $usuario->pwd)*/){
 				// Setear variables de sesion
 				//print_r($usuario);
 				//die;

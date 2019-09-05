@@ -75,7 +75,7 @@
 
           <div class="box-footer">
             <button type="submit" class="btn btn-primary">Guardar</button>
-            <a class="btn btn-default" href="<?= base_url();?>canchas/misCanchas" role="button">Volver</a>
+            <a class="btn btn-default" href="<?= base_url();?>canchas" role="button">Volver</a>
           </div>
         </form>
       </div>

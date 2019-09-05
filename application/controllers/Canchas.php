@@ -5,7 +5,7 @@ require_once APPPATH.'controllers/Protegido.php';
 class Canchas extends Protegido {
 
 	public function __construct(){
-		parent::__construct('canchas_model', 'canchas/misCanchas', 'cancha', array(''));
+		parent::__construct('canchas_model', 'canchas', 'cancha', array(''));
 		$this->load->model('canchas_model');
 		$this->load->model('tipo_superficie_model');
 		$this->load->model('complejos_model');
@@ -86,7 +86,7 @@ class Canchas extends Protegido {
 	}
 
 
-	public function misCanchas(){		
+	public function index(){
 		$canchasDelUsuario = $this->canchas_model->listarPorUsuario();
 		$data['canchas'] = $canchasDelUsuario;
 		parent::mostrarLista($data);

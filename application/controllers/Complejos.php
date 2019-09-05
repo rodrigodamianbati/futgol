@@ -5,7 +5,7 @@ require_once APPPATH.'controllers/Protegido.php';
 class Complejos extends Protegido {
 
 	public function __construct(){
-		parent::__construct('complejos_model', 'complejos/misComplejos', 'complejo', array(''));
+		parent::__construct('complejos_model', 'complejos', 'complejo', array(''));
 		$this->load->model('ciudades_model');
 		$this->load->model('complejos_model');
 	}
@@ -72,7 +72,7 @@ class Complejos extends Protegido {
 		}
 	}
 
-	public function misComplejos(){
+	public function index(){
 		$complejosDelUsuario = $this->complejos_model->listarPorUsuario();
 		$data['complejos'] = $complejosDelUsuario;
 		parent::mostrarLista($data);
@@ -134,7 +134,6 @@ class Complejos extends Protegido {
 	}
 	
 	public function eliminar_imagen(){
-		
 
 		$id_imagen = $_POST['id_imagen'];
 		$id_complejo = $_POST['id_complejo'];
