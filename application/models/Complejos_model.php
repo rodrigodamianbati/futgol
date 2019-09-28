@@ -55,4 +55,28 @@ class Complejos_model extends Objeto_model {
         $this->db->where('id', $id_imagen);
         $this->db->delete('imagen_complejo');
     }
+
+    public function servicios($idComplejo){
+        $this->db->select('s.*, sc.complejo_id');
+        $this->db->from('servicio s');
+        $this->db->join('servicio_complejo sc', 's.id = sc.servicio_id');
+        $this->db->where('sc.complejo_id', $idComplejo);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function nuevoServicio($id_complejo, $id_servicio){
+        $this->db->query("INSERT INTO servicio_complejo (servicio_id, complejo_id) VALUES($id_servicio, $id_complejo)");
+    }
+
+    public function eliminarServicio($id_servicio, $id_complejo) {
+        $this->db->where('complejo_id', $id_complejo);
+        $this->db->where('servicio_id', $id_servicio);
+        $this->db->delete('servicio_complejo');
+    }
+
+    public function agregarServicio($id_complejo, $id_servicio){
+        $this->db->query("INSERT INTO servicio_complejo (servicio_id, complejo_id, complejo_usuario_id) 
+            VALUES('$id_servicio', '$id_complejo')");
+    }
 }

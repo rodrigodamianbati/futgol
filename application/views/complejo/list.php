@@ -43,6 +43,7 @@
                     <td>
                       <a href="<?= base_url('complejos/edit/'.$complejo->id); ?>" class="btn btn-xs" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                       <a data-toggle="modal" data-target="#confirmDelete" href="#" class="btn btn-xs" href="#" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                      <a href="<?= base_url('complejos/servicios?id_complejo='.$complejo->id); ?>" class="btn btn-xs" href="#" role="button"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></a>
                       <a href="<?= base_url('complejos/imagenes?id_complejo='.$complejo->id); ?>" class="btn btn-xs" href="#" role="button"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span></a>
                     </td>
                   </tr>

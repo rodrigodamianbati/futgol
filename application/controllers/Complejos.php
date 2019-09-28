@@ -8,6 +8,7 @@ class Complejos extends Protegido {
 		parent::__construct('complejos_model', 'complejos', 'complejo', array(''));
 		$this->load->model('ciudades_model');
 		$this->load->model('complejos_model');
+		$this->load->model('servicios_model');
 	}
 
 	public function save(){
@@ -68,6 +69,7 @@ class Complejos extends Protegido {
 			$this->session->set_flashdata('errors', validation_errors());
 			$data['complejo'] = $postData;
 			$data['ciudades'] = $this->ciudades_model->findAllAsArray();
+			print_r($data['complejo']);
 			$this->mostrarForm($data);
 		}
 	}
@@ -79,19 +81,43 @@ class Complejos extends Protegido {
 	}
 
 	public function imagenes(){
+		$id_complejo = $_GET['id_complejo'];
+		$cabecera="";
+		$data['imagenes'] = $this->complejos_model->imagenes($id_complejo);
+		$data['id_complejo'] = $id_complejo;
+		$this->load->view('fine_uploader_head', $cabecera);
+		$this->load->view('dash/sidebar');
+		$this->load->view('complejo/administracion_fotos', $data);
+		$this->load->view('dash/footer');
+	}
 
-			$id_complejo = $_GET['id_complejo'];
-			$cabecera="";
-			$data['imagenes'] = $this->complejos_model->imagenes($id_complejo);
-			$data['id_complejo'] = $id_complejo;
-			$this->load->view('fine_uploader_head', $cabecera);
-			$this->load->view('dash/sidebar');
-			$this->load->view('complejo/administracion_fotos', $data);
-			$this->load->view('dash/footer');
+	public function servicios(){
+		$id_complejo = $_GET['id_complejo'];
+		$cabecera="";
+		$data['servicios_complejo'] = $this->complejos_model->servicios($id_complejo);
+		$data['servicios'] = $this->servicios_model->listar($id_complejo);
+		$data['id_complejo'] = $id_complejo;
+		$this->load->view('fine_uploader_head', $cabecera);
+		$this->load->view('dash/sidebar');
+		$this->load->view('complejo_servicio/list', $data);
+		$this->load->view('dash/footer');
+	}
+
+	public function nuevoServicio() {
+		$id_complejo = $_GET['id_complejo'];
+		$id_servicio = $this->input->post('id_servicio');
+		$this->complejos_model->nuevoServicio($id_complejo, $id_servicio);
+		redirect('/complejos/servicios?id_complejo='.$id_complejo, 'refresh');
+	}
+
+	public function eliminarServicio() {
+		$id_complejo = $this->uri->segment(4);
+		$id_servicio = $this->uri->segment(3);
+		$this->complejos_model->eliminarServicio($id_servicio, $id_complejo);
+		redirect('/complejos/servicios?id_complejo='.$id_complejo, 'refresh');
 	}
 
 	public function subir_fotos(){
-	
 		$config['upload_path'] = './uploads/';
 
         $config['allowed_types'] = 'gif|jpg|png';
@@ -105,42 +131,28 @@ class Complejos extends Protegido {
 
 		$this->load->library('upload', $config); //subo el archivo al servido
 		
-		
-
         if (!$this->upload->do_upload('qqfile')) {
-
             $estado = array('error' => $this->upload->display_errors());
-
             http_response_code(500);
         } else {
-
             $path = '../uploads/' . $nombre;
-
             //$id = $_GET['id'];
-
             $this->nuevoPathFoto($_GET['id_complejo'], $path, $nombre);
             $estado = array('success' => true);
-
         }
 
         $estado_encode = json_encode($estado);
-
 		echo $estado_encode;
     }
 
-    private function nuevoPathFoto($id_complejo, $path, $nombre)
-    {	
+    private function nuevoPathFoto($id_complejo, $path, $nombre) {	
         $this->complejos_model->nuevaFoto($id_complejo, $path, $nombre);
 	}
 	
-	public function eliminar_imagen(){
-
+	public function eliminar_imagen() {
 		$id_imagen = $_POST['id_imagen'];
 		$id_complejo = $_POST['id_complejo'];
 		$this->complejos_model->eliminar_imagen($id_imagen);
-
 		redirect('/complejos/imagenes?id_complejo='.$id_complejo, 'refresh');
 	}
-	
-
 }
