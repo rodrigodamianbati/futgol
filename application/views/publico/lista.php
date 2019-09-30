@@ -47,7 +47,7 @@
 											<div class="room-wrap">
 												<div class="row">
 													<div class="col-md-5 col-sm-6">
-														<div class="room-img" style="background-image: url(<?= base_url(); ?>/uploads/room1.jpg);"></div>
+														<div class="room-img" style="background-image: url(<?= base_url(); ?>/tour/images/img_bg_5.jpg);"></div>
 													</div>
 													<div class="col-md-6 col-sm-6">
 														<div class="desc">
