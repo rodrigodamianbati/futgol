@@ -15,10 +15,16 @@
 							<article class="animate-box">
 								
 									<form method="post" action="<?= base_url('welcome/reservar');?>" >
-										<input type="hidden" name="cancha_id" value="<?//= $this->session->datos->cancha_id?>">
-										<input type="hidden" name="fecha" value="<?//= $this->session->datos->fecha?>">
-				          				  <input type="submit" name="submit" id="submit" value="Reservar YA!" class="btn btn-primary" style="font-weight: bold;">
-										<a class="btn btn-success" href="<?= base_url();?>welcome/lista/<?//= $this->session->datos->pagina ?>" role="button" style="font-weight: bold;">Volver</a>
+										<!-- Cancha. datos->id es el complejo -->
+										<input type="hidden" name="cancha_id" value="<?= $this->session->datos->cancha_id?>">
+										<!-- Fecha de la reserva -->
+										<input type="hidden" name="desde" value="<?= $this->session->datos->desde?>">
+										<!-- Hora de la reserva -->
+										<input type="hidden" name="hasta" value="<?= $this->session->datos->hasta?>">
+										<!-- Jugadores -->
+										<input type="hidden" name="pasajeros" value="<?= $this->session->datos->pasajeros?>">
+				            			<input type="submit" name="submit" id="submit" value="Reservar YA!" class="btn btn-primary" style="font-weight: bold;">
+										<a class="btn btn-success" href="<?= base_url();?>welcome/lista/<?= $this->session->datos->pagina ?>" role="button" style="font-weight: bold;">Volver</a>
 									</form>
 								</div>
 							</article>
