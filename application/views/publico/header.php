@@ -49,7 +49,12 @@
 	<body>
 
 	<div class="colorlib-loader"></div>
-
+	<?php if ($this->session->flashdata('error')) { ?>
+	<div class="alert alert-danger">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Error!</strong> <?php echo $this->session->flashdata('error'); ?>
+        </div>
+	<?php } ?>
 	<div id="page">
 		<nav class="colorlib-nav" role="navigation">
 			<div class="top-menu">
@@ -76,4 +81,5 @@
 				</div>
 			</div>
 		</nav>
+		
 

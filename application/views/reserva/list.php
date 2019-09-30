@@ -20,28 +20,19 @@
             <div class="box-body table-responsive no-padding">
               <table class="table table-hover">
                 <thead>
-                  <th>Desde</th>
-                  <th>Hasta</th>
-                  <th>Alojamiento</th>
-                  <th>Propietario</th>
-                  <th>Estado</th>
-                  <th style="text-align:center">Mensajes?</th>
+                  <th>Fecha</th>
+                  <th>Hora</th>
+                  <th>Cancha</th>
                 </thead>
                 <tbody>
                   <?php foreach ($reservas as $reserva): ?>
                   <tr>
-                    <td><?= date("d/m/Y", strtotime($reserva->fecha_desde)); ?></td>
-                    <td><?= date("d/m/Y", strtotime($reserva->fecha_hasta)); ?></td>
-                    <td><?= $reserva->alojamiento; ?></td>
-                    <td><?= $reserva->propietario_nombre.' '.$reserva->propietario_apellido; ?></td>
-                    <td><?= $reserva->estado_reserva; ?></td>
-                    <td style="text-align:center"><?= ($reserva->mensajes>0)?'Si':'No'; ?></td>
+                    <td><?= date("d/m/Y", strtotime($reserva->fecha)); ?></td>
+                    <td><?= date("H:i:s", strtotime($reserva->fecha)); ?></td>
                     <td>
-                      <a href="<?= base_url('reservas/edit/'.$reserva->id); ?>" class="btn btn-xs" role="button"><span class="glyphicon glyphicon-edit" title="Editar la reserva" aria-hidden="true"></span></a>
-                      <a href="javascript:void(0);" onclick="pagar('<?=$reserva->estado_reserva?>', <?=$reserva->id?>);" class="btn btn-xs" role="button"><span class="fa fa-dollar fa-lg" title="Pagar la reserva" aria-hidden="true"></span></a>                     
-                      <a href="javascript:void(0);" onclick="mensajes('<?=$reserva->estado_reserva?>', <?=$reserva->id?>);" class="btn btn-xs" role="button"><span class="<?= ($reserva->mensajes>0)?'fa fa-envelope-open':'fa fa-envelope' ?>"  title="Ver los mensajes" aria-hidden="true"></span></a>
-                      <a href="javascript:void(0);" onclick="calificar('<?=$reserva->estado_reserva?>', <?=$reserva->id?>, <?=$reserva->calificada?>);" class="btn btn-xs" role="button"><span class="glyphicon glyphicon-ok-sign" title="Calificar" aria-hidden="true"></span></a>
-                      <a href="javascript:void(0);" onclick="borrar('<?=$reserva->estado_reserva?>', <?=$reserva->id?>);" class="btn btn-xs" role="button"><span class="glyphicon glyphicon-trash" title="Borrar la reserva" aria-hidden="true"></span></a>
+                    <a href="javascript:void(0);" onclick="verCancha('<?=$reserva->cancha_id?>');" class="btn btn-xs" role="button">Ver información</a>
+                    <!--<a href="<?//= base_url('canchas/view/'.$reserva->cancha_id); ?>" class="btn btn-xs" role="button"><?//=$reserva->cancha_nombre ?></a> -->
+
                     </td>
                   </tr>
                   <?php endforeach; ?>
@@ -58,80 +49,92 @@
   </div>
   <!-- /.content-wrapper -->
 
-    <!-- Ventana error -->
-    <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Atención</h4>
-        </div>
-        <div class="modal-body">
-          <span id="textoError"></span>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        </div>
-      </div><!-- /.modal-content -->
+  <div class="modal fade" id="modal_form" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">
+             <i class="glyphicon glyphicon-info-sign"></i> Información de la cancha
+             </h4> 
+            </div>
+            <div class="modal-body form">
+                <form action="#" id="form" class="form-horizontal">
+                    <input type="hidden" value="" name="id"/> 
+                    <div class="form-body">
+                      <div class="row"> 
+                        <div class="col-md-12">   
+                          <div class="table-responsive">      
+                           <table class="table table-striped table-bordered">      
+                              <tr>
+                              <th>Superficie</th>
+                              <td id="superficie_nombre"></td>
+                              </tr>
+                                                  
+                              <tr>
+                              <th>Abierta</th>
+                              <td id="abierta"></td>
+                              </tr>
+                                                  
+                              <tr>
+                              <th>Jugadores</th>
+                              <td id="jugadores"></td>
+                              </tr>
+                                                  
+                              <tr>
+                              <th>Caracteristicas</th>
+                              <td id="caracteristicas"></td>
+                              </tr>
+                              <tr>
+                              <th>Nombre del complejo</th>
+                              <td id="complejo_nombre"></td>
+                              </tr>
+                              <tr>
+                              <th>Dirección</th>
+                              <td id="direccion"></td>
+                              </tr>
+                              <tr>
+                              <th>Telefono</th>
+                              <td id="telefono"></td>
+                              </tr>               
+                            </table>                    
+                        </div>                          
+                      </div> 
+                    </div>
+                 </div>
+             </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">cerrar</button>
+            </div>
+        </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
+</div><!-- /.modal -->
+<!-- End Bootstrap modal -->
 
-  <script>
+<script>
 
-  function pagar(estado, id){
-    if (estado == 'CONFIRMADA'){
+function verCancha(id){
       $.ajax({
-          type: "GET",
-          url: "<?= base_url('reservas/pagar/');?>" + id,
-          success : function(data){
-            //window.location.reload();
-            window.location.href = "<?= base_url('pagos/crear/');?>" + id;
-          }
-      });
-    } else {
-      $("#textoError").html('Solo pueden pagarse reservas confirmadas &hellip;')
-      $("#myModal").modal('show');
-    }
+            url : "<?php echo site_url('canchas/devolverCancha')?>/"+id,
+            type: "GET",
+            dataType: "JSON",
+            success: function(data)
+            {
+              $('#superficie_nombre').html(data.superficie_nombre);
+              $('#abierta').html((data.abierta==1)?'SI':'NO');
+              $('#jugadores').html(data.jugadores);
+              $('#caracteristicas').html(data.caracteristicas);
+              $('#complejo_nombre').html(data.complejo_nombre);
+              $('#direccion').html(data.direccion);
+              $('#telefono').html(data.telefono);
+              $('#modal_form').modal('show'); 
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error deleting data');
+            }
+        });
+
   }
-
-  function mensajes(estado, id){
-    if (estado == 'CONFIRMADA'){
-      window.location.href = "<?= base_url('reservas/mensajes/');?>" + id;
-    } else {
-      $("#textoError").html('Solo pueden enviarse mensajes con reservas confirmadas &hellip;')
-      $("#myModal").modal('show');
-    }
-  }
-  
-  function calificar(estado, id, calificada){
-    if (estado == 'PAGADA'){
-      if (!calificada){
-        window.location.href = "<?= base_url('reservas/calificar/');?>" + id;
-      } else {
-        $("#textoError").html('La reserva se puede calificar solo una vez &hellip;')
-        $("#myModal").modal('show');
-      }
-    } else {
-      $("#textoError").html('Solo pueden calificarse reservas pagadas &hellip;')
-      $("#myModal").modal('show');
-    }
-  }
-
-  function borrar(estado, id){
-    if (estado == 'PEDIDA'){
-      $.ajax({
-          type: "GET",
-          url: "<?= base_url('reservas/delete/');?>" + id,
-          success : function(data){
-            window.location.reload();
-          }
-      });
-    } else {
-      $("#textoError").html('Solo pueden borrarse reservas sin confirmar o cancelar&hellip;')
-      $("#myModal").modal('show');
-    }
-  }
-
-
-
 </script>

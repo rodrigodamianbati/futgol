@@ -29,7 +29,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <li class="active"><a href="#"><i class="fa fa-address-book"></i> <span>Usuarios</span></a></li>
         <?php } ?>
         <li class="header">JUGADOR</li>
-        <li class="active"><a href="#"><i class="fa fa-calendar"></i> <span>Mis reservas</span></a></li>
+        <li class="active"><a href="<?= base_url('reservas'); ?>"><i class="fa fa-calendar"></i> <span>Mis reservas</span></a></li>
         <li class="active"><a href="#"><i class="fa fa-user-plus"></i> <span>Mis invitaciones</span></a></li>
         <li class="header">PROPIETARIO</li>
         <li class="active"><a href="<?= base_url('complejos'); ?>"><i class="fa fa-home"></i> <span>Mis complejos</span></a></li>

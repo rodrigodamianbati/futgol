@@ -13,9 +13,10 @@ class Canchas_model extends Objeto_model {
      * Construye una entidad a partir de los elementos que la forman
      * Retorna una entidad
      */
-    public function toEntityObject($id,$complejo_id,$jugadores,$abierta,$caracteristicas,$tipo_superficie_id ){
+    public function toEntityObject($id, $complejo_id,$jugadores,$abierta,$caracteristicas,$tipo_superficie_id ){
       $entidad = new Canchas_model();
       $entidad->id = $id;
+    //  $entidad->nombre = $nombre;
       $entidad->complejo_id = $complejo_id;
       $entidad->jugadores = $jugadores;
       $entidad->abierta = $abierta;
@@ -26,7 +27,7 @@ class Canchas_model extends Objeto_model {
 
 
      public function listarPorUsuario(){
-        $this->db->select('cancha.*, complejo.nombre as complejo_nombre,tipo_superficie.nombre as superficie_nombre');
+        $this->db->select('cancha.*,  complejo.nombre as complejo_nombre,tipo_superficie.nombre as superficie_nombre');
         $this->db->from('usuario');
         $this->db->join('complejo', 'usuario.id = complejo.usuario_id');
         $this->db->join('cancha', 'cancha.complejo_id = complejo.id');
@@ -37,8 +38,16 @@ class Canchas_model extends Objeto_model {
         return $query->result();
         
       }
-
-
+      public function selectCancha($id){
+        $this->db->select('cancha.*,  complejo.direccion, complejo.telefono, complejo.nombre as complejo_nombre, tipo_superficie.nombre as superficie_nombre');
+        $this->db->from('cancha');
+        $this->db->join('complejo', 'cancha.complejo_id = complejo.id');
+        $this->db->join('tipo_superficie', 'tipo_superficie.id = cancha.Tipo_superficie_id');
+        $this->db->where('cancha.id', $id);
+        $query = $this->db->get();
+        return $query->result();
+        
+      }
 
 
     private function queryCanchas(){

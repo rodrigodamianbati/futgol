@@ -9,8 +9,8 @@ class Welcome extends CI_Controller {
 		parent::__construct();
 		$this->load->helper('url_helper');
 		$this->load->model('ciudades_model');
+		$this->load->model('reservas_model');
 		$this->load->model('canchas_model');
-
 		$this->load->library('form_validation');
 		$this->load->library('pagination');
 	}
@@ -89,14 +89,14 @@ class Welcome extends CI_Controller {
 			$this->session->datos->desde, 
 			$this->session->datos->hasta, 
 			$this->session->datos->pasajeros,
-			REGISTROS_PAGINA, 
+			REGISTROS_PAGINA,
 			$start);
 		$data['cantidad'] = $this->canchas_model->cantidadCanchas($ciudad, $this->session->datos->desde, $this->session->datos->hasta, $this->session->datos->pasajeros);
 		//print_r($data);
 		//die;
 		//https://www.codeigniter.com/user_guide/libraries/pagination.html		
 		//https://code.tutsplus.com/es/tutorials/pagination-in-codeigniter-the-complete-guide--cms-29030
-		//https://stackoverflow.com/questions/20088779/bootstrap-3-pagination-with-codeigniter		
+		//https://stackoverflow.com/questions/20088779/bootstrap-3-pagination-with-codeigniter
 		$config['base_url'] = base_url().'welcome/lista';
 		$config['total_rows'] = $data['cantidad'];
 		$config['per_page'] = REGISTROS_PAGINA;
@@ -107,7 +107,7 @@ class Welcome extends CI_Controller {
 		$config['num_links'] = 2;
 		$config['use_page_numbers'] = TRUE;
 		$config['reuse_query_string'] = TRUE;
-			
+
 		$config['full_tag_open'] = "<ul class='pagination'>";
 		$config['full_tag_close'] ="</ul>";
 		$config['num_tag_open'] = '<li>';
@@ -134,35 +134,13 @@ class Welcome extends CI_Controller {
 
 	public function ver($id=NULL){
 		$data = new stdClass();
-		$data->id = $this->input->post('alojamiento_id');
-		$data->desde = $this->input->post('desde');
-		$data->hasta = $this->input->post('hora');
-		$data->pasajeros = $this->input->post('jugadores');
-		$data->alojamiento = $this->alojamientos_model->findById($data->id);
-		$data->ciudad = $this->ciudades_model->ciudad($data->alojamiento->ciudades_id);
-		$data->ciudades_id = $data->ciudad->id;
-		$data->servicios = $this->alojamientos_model->servicios($data->id);
-		$data->imagenes = $this->alojamientos_model->imagenesAlojamiento($data->id);
-
-		$data->tipo_alojamiento = $this->tipos_alojamiento_model->findById($data->alojamiento->tipos_alojamiento_id)->nombre;
-		$data->noches = $this->alojamientos_model->noches($this->session->datos->desde, $this->session->datos->hasta);
-		$data->total = $this->alojamientos_model->total($data->alojamiento->precio, $data->desde, $data->hasta);
-
-		//Calificaciones
-		$data->u = $this->calificaciones_model->findCalificacionUbicacionByAlojamientoId($data->id);
-		$data->p = $this->calificaciones_model->findCalificacionPrecioByAlojamientoId($data->id);
-		$data->l = $this->calificaciones_model->findCalificacionLimpiezaByAlojamientoId($data->id);
-		$data->c = $this->calificaciones_model->contarCalificacionLimpiezaByAlojamientoId($data->id);
 		
-
-		$data->pagina = $this->input->post('pagina');
-
 		//Agregar datos a sesión
 		$datosSesion = array(
 			'formulario'  => 'ver',
 			'datos'		=> $data
 		);
-		$this->session->set_userdata($datosSesion);		
+		$this->session->set_userdata($datosSesion);
 
 		$this->vistaDetalle();
 	}
@@ -178,36 +156,35 @@ class Welcome extends CI_Controller {
 
 	public function reservar($id=NULL){
 		$data = new stdClass();
-		$data->id = $this->input->post('alojamiento_id');
-		$data->desde = $this->input->post('desde');
-		$data->hasta = $this->input->post('hora');
-		$data->pasajeros = $this->input->post('jugadores');
-
-		$this->validarReserva();
-		if($this->form_validation->run()==TRUE){
+		$data->usuario_id = $this->session->data['user_id'];
+		//$data->turno_id = $this->input->post('turno_id');
+		$data->cancha_id = "5";
+		//$data->fecha = $this->input->post('fecha');
+		$data->fecha = '2019-09-27 03:00:00';
+	
 			if ($this->tieneSesion()){
 				$reserva = new Reservas_model();
 				$postData = $reserva->toEntityObject(
 					'',
-					$data->desde,
-					$data->hasta,
-					$data->id,
-					1,
-					$this->session->data['user_id']
+					$data->usuario_id,
+					$data->cancha_id,
+					$data->fecha
 				);
+				try {
 				$this->reservas_model->insert($postData);
-
-				// Ir a reservas
 				redirect('reservas');
+
+				} catch (Exception $ex) {
+				$error_msg = $ex->getMessage();
+				$this->session->set_flashdata('error', $error_msg);
+				$this->ver();
+			}
+	
 			} else {
 				// Loguearse o crear usuario, pasando referer.
 				redirect('sesion/login');
 			}
-			
-		} else {
-			$this->session->set_flashdata('errors', validation_errors());
-			$this->ver();
-		}
+
 	}
 
 	private function tieneSesion(){
