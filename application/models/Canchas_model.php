@@ -116,4 +116,18 @@ class Canchas_model extends Objeto_model {
       return false;
   }
 
+    /**
+     * Busca un objeto con el id dado
+     */
+    public function getById($id){
+
+        $this->db->select('cancha.*');
+        $this->db->from('cancha');
+        $this->db->where('cancha.id', $id);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+
+
 }
