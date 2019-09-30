@@ -9,6 +9,7 @@ class Welcome extends CI_Controller {
 		parent::__construct();
 		$this->load->helper('url_helper');
 		$this->load->model('ciudades_model');
+		$this->load->model('canchas_model');
 
 		$this->load->library('form_validation');
 		$this->load->library('pagination');
@@ -41,24 +42,24 @@ class Welcome extends CI_Controller {
 
 	public function validar(){
 		$this->form_validation->set_rules('desde', 'Desde', 'required');
-		$this->form_validation->set_rules('hasta', 'Hasta', 'required');
+		$this->form_validation->set_rules('hora', 'Hora', 'required');
 		$this->form_validation->set_rules('ciudades_id', 'Ciudad', 'required');
-		$this->form_validation->set_rules('pasajeros', 'Pasajeros', 'required');
+		$this->form_validation->set_rules('jugadores', 'Jugadores', 'required');
 	}
 
 	public function validarReserva(){
 		$this->form_validation->set_rules('desde', 'Desde', 'required');
-		$this->form_validation->set_rules('hasta', 'Hasta', 'required');
+		$this->form_validation->set_rules('hora', 'Hora', 'required');
 		$this->form_validation->set_rules('alojamiento_id', 'Alojamiento', 'required');
-		$this->form_validation->set_rules('pasajeros', 'Pasajeros', 'required');
+		$this->form_validation->set_rules('jugadores', 'Jugadores', 'required');
 	}
 
 	public function buscar(){
 		$data = new stdClass();
 		$data->ciudades_id = $this->input->post('ciudades_id');
 		$data->desde = $this->input->post('desde');
-		$data->hasta = $this->input->post('hasta');
-		$data->pasajeros = $this->input->post('pasajeros');
+		$data->hasta = $this->input->post('hora');
+		$data->pasajeros = $this->input->post('jugadores');
 
 		$this->validar();
 		if($this->form_validation->run()==TRUE){
@@ -68,6 +69,7 @@ class Welcome extends CI_Controller {
 				'datos'		=> $data
 			);
 			$this->session->set_userdata($datosSesion);
+			//print_r($this->session->datos);
 			$this->lista();
 
 		} else {
@@ -82,15 +84,16 @@ class Welcome extends CI_Controller {
 		$data['pagina'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 1;
 		$start = ($this->uri->segment(3)) ? ($this->uri->segment(3)-1) * REGISTROS_PAGINA : 0;
 		//$data['alojamientos'] = $this->alojamientos_model->buscar($ciudad, $this->session->datos->desde, $this->session->datos->hasta, $this->session->datos->pasajeros);
-		$data['alojamientos'] = $this->alojamientos_model->get_current_page_records(
+		$data['alojamientos'] = $this->canchas_model->get_current_page_records(
 			$ciudad, 
 			$this->session->datos->desde, 
 			$this->session->datos->hasta, 
 			$this->session->datos->pasajeros,
 			REGISTROS_PAGINA, 
 			$start);
-		$data['cantidad'] = $this->alojamientos_model->cantidadAlojamientos($ciudad, $this->session->datos->desde, $this->session->datos->hasta, $this->session->datos->pasajeros);
-
+		$data['cantidad'] = $this->canchas_model->cantidadCanchas($ciudad, $this->session->datos->desde, $this->session->datos->hasta, $this->session->datos->pasajeros);
+		//print_r($data);
+		//die;
 		//https://www.codeigniter.com/user_guide/libraries/pagination.html		
 		//https://code.tutsplus.com/es/tutorials/pagination-in-codeigniter-the-complete-guide--cms-29030
 		//https://stackoverflow.com/questions/20088779/bootstrap-3-pagination-with-codeigniter		
@@ -133,8 +136,8 @@ class Welcome extends CI_Controller {
 		$data = new stdClass();
 		$data->id = $this->input->post('alojamiento_id');
 		$data->desde = $this->input->post('desde');
-		$data->hasta = $this->input->post('hasta');
-		$data->pasajeros = $this->input->post('pasajeros');
+		$data->hasta = $this->input->post('hora');
+		$data->pasajeros = $this->input->post('jugadores');
 		$data->alojamiento = $this->alojamientos_model->findById($data->id);
 		$data->ciudad = $this->ciudades_model->ciudad($data->alojamiento->ciudades_id);
 		$data->ciudades_id = $data->ciudad->id;
@@ -177,8 +180,8 @@ class Welcome extends CI_Controller {
 		$data = new stdClass();
 		$data->id = $this->input->post('alojamiento_id');
 		$data->desde = $this->input->post('desde');
-		$data->hasta = $this->input->post('hasta');
-		$data->pasajeros = $this->input->post('pasajeros');
+		$data->hasta = $this->input->post('hora');
+		$data->pasajeros = $this->input->post('jugadores');
 
 		$this->validarReserva();
 		if($this->form_validation->run()==TRUE){

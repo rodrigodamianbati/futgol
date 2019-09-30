@@ -100,8 +100,8 @@
 				                  <div class="form-group">
 				                    <label for="date">Hora:</label>
 				                    <div class="form-field">
-				                      <input type="text" id="hasta" name="hasta" class="form-control" placeholder="Hora del partido">
-															<?= form_error('hasta', '<p class="text-danger">'); ?>
+				                      <input type="text" id="hora" name="hora" class="form-control" placeholder="Hora del partido">
+															<?= form_error('hora', '<p class="text-danger">'); ?>
 														</div>
 				                  </div>
 				                </div>
@@ -109,8 +109,8 @@
 				                  <div class="form-group">
 				                    <label for="guests">Jugadores</label>
 				                    <div class="form-field">
-									  					<input type="text" id="pasajeros" name="pasajeros" class="form-control" placeholder="Personas" value="5">
-															<?= form_error('pasajeros', '<p class="text-danger">'); ?>
+									  					<input type="text" id="jugadores" name="jugadores" class="form-control" placeholder="Jugadores" value="5">
+															<?= form_error('jugadores', '<p class="text-danger">'); ?>
 														</div>
 				                  </div>
 				                </div>

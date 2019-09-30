@@ -38,4 +38,73 @@ class Canchas_model extends Objeto_model {
         
       }
 
+
+
+
+    private function queryCanchas(){
+        $this->db->select('co.id, ca.id as cancha_id, co.nombre, co.direccion, ci.nombre ciudad, co.telefono, co.email, ca.caracteristicas, ca.jugadores, ca.abierta, ts.nombre as tipo_superficie');
+        $this->db->from('complejo co');
+        $this->db->join('cancha ca', 'ca.complejo_id = co.id');
+        $this->db->join('ciudad ci', 'co.ciudad_id = ci.id');
+        $this->db->join('tipo_superficie ts', 'ca.Tipo_superficie_id = ts.id');
+
+        //$this->db->join('reservas r', 'r.alojamientos_id = a.id');
+    }      
+
+
+  private function queryBuscar($ciudad, $desde, $hasta, $pasajeros){
+      $this->queryCanchas();
+      /*
+      $this->db->join(
+          'imagenes im', 
+          'im.id = (select i.id from imagenes i where i.alojamientos_id = a.id limit 1)',
+          'left'
+      );*/        
+      /*
+      $this->db->where('a.ciudades_id', $ciudad);
+      $this->db->where('a.plazas >=', $pasajeros);
+      $this->db->where('a.activo', 1);
+      */
+      /*
+      // Filtra por rangos de fechas
+      $this->db->where("NOT (EXISTS(SELECT res.id 
+      FROM reservas res where res.alojamientos_id = a.id  "       
+      ." and ((res.fecha_desde <= '".$desde."' and res.fecha_hasta >= '".$hasta."')"
+      ." or (res.fecha_desde >= '".$desde."' and res.fecha_desde < '".$hasta."')"
+      ." or (res.fecha_hasta > '".$desde."' and res.fecha_hasta <= '".$hasta."')"
+      .")"
+      ."))");
+
+      */
+  }
+
+  public function buscar($ciudad, $desde, $hasta, $pasajeros){
+      $this->queryBuscar($ciudad, $desde, $hasta, $pasajeros);
+      $query = $this->db->get();
+      return $query->result();        
+  }
+
+  public function cantidadCanchas($ciudad, $desde, $hasta, $pasajeros){
+      $this->queryBuscar($ciudad, $desde, $hasta, $pasajeros);
+      return $this->db->count_all_results();
+  }
+
+  public function get_current_page_records($ciudad, $desde, $hasta, $pasajeros,$limit, $start)
+  {
+      $this->queryBuscar($ciudad, $desde, $hasta, $pasajeros);        
+      $this->db->limit($limit, $start);
+      $query = $this->db->get();
+ 
+      if ($query->num_rows() > 0)
+      {
+          foreach ($query->result() as $row)
+          {
+              $data[] = $row;
+          }
+          
+          return $data;
+      }
+      return false;
+  }
+
 }

@@ -8,13 +8,13 @@
 			   			<div class="row">
 				   			<div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 slider-text">
 				   				<div class="slider-text-inner text-center">
-									<h1>Búsqueda de alojamientos</h1>
+									<h1>Búsqueda de canchas</h1>
 									<?php if($cantidad==0){ ?>
-										<h2>No se encontraron propiedades.</h2>
+										<h2>No se encontraron canchas.</h2>
 									<?php } else if($cantidad==1){ ?>
-										<h2>Se encontró <?=$cantidad?> propiedad.</h2>
+										<h2>Se encontró <?=$cantidad?> cancha.</h2>
 									<?php } else { ?>
-										<h2>Se encontraron <?=$cantidad?> propiedades.</h2>
+										<h2>Se encontraron <?=$cantidad?> canchas.</h2>
 									<?php } ?>									
 				   				</div>
 				   			</div>
@@ -47,17 +47,16 @@
 											<div class="room-wrap">
 												<div class="row">
 													<div class="col-md-5 col-sm-6">
-														<div class="room-img" style="background-image: url(<?= base_url(); ?>/uploads/<?= $alojamiento->imagen_nombre?>);"></div>
+														<div class="room-img" style="background-image: url(<?= base_url(); ?>/uploads/room1.jpg);"></div>
 													</div>
 													<div class="col-md-6 col-sm-6">
 														<div class="desc">
 															<h2><?=$alojamiento->nombre?></h2>
 															<h4><?=$alojamiento->ciudad?></h4>
-															<h5><?=$alojamiento->tipo_alojamiento?>. Para <?=$alojamiento->plazas?> personas.</h5>
-															<p class="price"><span><?=$alojamiento->precio?></span> <small>/ noche</small></p>
+															<h5><?=$alojamiento->tipo_superficie?>. Para <?=$alojamiento->jugadores?> jugadores.</h5>
 															
 															<form method="post" action="<?= base_url('welcome/ver');?>" >
-																<input type="hidden" name="alojamiento_id" value="<?=$alojamiento->id?>">
+																<input type="hidden" name="cancha_id" value="<?=$alojamiento->cancha_id?>">
 																<input type="hidden" name="desde" value="<?=$this->session->datos->desde?>">
 																<input type="hidden" name="hasta" value="<?=$this->session->datos->hasta?>">
 																<input type="hidden" name="pasajeros" value="<?=$this->session->datos->pasajeros?>">
