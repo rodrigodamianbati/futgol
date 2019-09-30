@@ -97,12 +97,12 @@ class Usuarios extends CI_Controller {
 
 
 	private function validar_modif(){
-		//$this->form_validation->set_rules('usuario', 'Usuario', 'required');
+		$this->form_validation->set_rules('usuario', 'Nombre', 'required');
 		$this->form_validation->set_rules('email', 'Email', 'required');
 	}
 
 	private function validar_cambio($id){
-		$this->form_validation->set_rules('password', 'Password',
+		$this->form_validation->set_rules('password', 'Contraseña',
 				array(
 						'required',
 						'trim',
@@ -127,15 +127,15 @@ class Usuarios extends CI_Controller {
 
 	private function validar(){
 		$this->validar_modif();
-		$this->form_validation->set_rules('password', 'Password', 'required');
+		$this->form_validation->set_rules('password', 'Contraseña', 'required');
 	}
 
 
 	public function persist(){
 		$this->validar();
 		$postData = new Usuarios_model();
-		$postData->id = $this->input->post('id');
-		//$postData->usuario = $this->input->post('usuario');
+		//$postData->id = $this->input->post('id');
+		$postData->nombre = $this->input->post('usuario');
 		$postData->email = $this->input->post('email');
 		$postData->pwd = $this->input->post('password');
 

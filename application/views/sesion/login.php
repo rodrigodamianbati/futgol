@@ -61,9 +61,7 @@
       </div>
     </form>
     <br/>
-    <!--
     <a href="<?= base_url('usuarios/create');?>" class="text-center">Crear un nuevo usuario</a>
-    -->
 
   </div>
   <!-- /.login-box-body -->
