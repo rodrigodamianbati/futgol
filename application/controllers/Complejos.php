@@ -8,7 +8,10 @@ class Complejos extends Protegido {
 		parent::__construct('complejos_model', 'complejos', 'complejo', array(''));
 		$this->load->model('ciudades_model');
 		$this->load->model('complejos_model');
+		$this->load->model('canchas_model');
 		$this->load->model('servicios_model');
+		$this->load->model('imagenes_model');
+		$this->load->helper('url');
 	}
 
 	public function save(){
@@ -152,7 +155,34 @@ class Complejos extends Protegido {
 	public function eliminar_imagen() {
 		$id_imagen = $_POST['id_imagen'];
 		$id_complejo = $_POST['id_complejo'];
+
 		$this->complejos_model->eliminar_imagen($id_imagen);
+
 		redirect('/complejos/imagenes?id_complejo='.$id_complejo, 'refresh');
 	}
+
+
+
+	
+
+	public function detalles(){
+
+		$data = Array();
+		$id_cancha = $this->uri->segment(3);
+		$complejo = $this->complejos_model->complejo($id_cancha);
+		$id_complejo = $this->canchas_model->id_complejo($id_cancha);
+		$imagenes = $this->complejos_model->imagenes($id_complejo);
+		$servicios = $this->complejos_model->servicios($id_complejo);
+	
+		$data['complejo'] = $complejo[0];
+		$data['imagenes'] = $imagenes;
+		$data['servicios'] = $servicios;
+
+		
+		$this->load->view('dash/header');
+		$this->load->view('dash/sidebar');
+		$this->load->view('complejo/detalles', $data);
+		$this->load->view('dash/footer');
+	}
+
 }

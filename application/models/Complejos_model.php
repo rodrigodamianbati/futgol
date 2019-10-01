@@ -79,4 +79,15 @@ class Complejos_model extends Objeto_model {
         $this->db->query("INSERT INTO servicio_complejo (servicio_id, complejo_id, complejo_usuario_id) 
             VALUES('$id_servicio', '$id_complejo')");
     }
+
+    public function complejo($id_cancha){
+        $this->db->select('com.nombre as complejo_nombre, ci.nombre as ciudad_nombre, com.direccion, com.telefono, com.telefono, com.email, u.nombre as usuario_nombre');
+        $this->db->from('cancha can');
+        $this->db->join('complejo com', 'can.complejo_id = com.id');
+        $this->db->join('usuario u', 'u.id = com.usuario_id');
+        $this->db->join('ciudad ci', 'com.ciudad_id = ci.id');
+        $this->db->where('can.id', $id_cancha);
+        $query = $this->db->get();
+        return $query->result();
+    }
 }

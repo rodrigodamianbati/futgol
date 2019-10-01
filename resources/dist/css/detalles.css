@@ -1,0 +1,36 @@
+#detalles_box{
+    padding-top: 5px;
+    margin-left: 5px;
+    float: left;
+}
+
+#detalles_contenido{
+    height: auto;
+    height: 100%;
+    width: 300px;
+}
+
+#detalles_imagen {
+    display: block;
+    max-width: 300px;
+    max-height: 300px;
+}
+
+.detalles_envoltorio{
+    display: block;
+    width: 500px;
+}
+
+.detalles_botones{
+    margin: 5%;
+   
+}
+
+.detalles_panel{
+    margin-bottom: 0px !important;
+    height: 55px;
+}
+
+.detalles_contenido{
+    padding-left: 5%
+}

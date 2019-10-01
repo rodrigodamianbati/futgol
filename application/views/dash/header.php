@@ -20,6 +20,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="<?= base_url(); ?>resources/dist/css/skins/skin-blue.min.css">
 
+  <link rel="stylesheet" href="<?= base_url(); ?>resources/dist/css/detalles.css">
+
+  <link rel="stylesheet" href="<?= base_url(); ?>resources/dist/css/imagenes.css">
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>

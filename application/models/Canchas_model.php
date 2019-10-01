@@ -128,6 +128,14 @@ class Canchas_model extends Objeto_model {
         return $query->result();
     }
 
+    public function id_complejo($id_cancha){
+        $this->db->select('c.complejo_id as id_complejo');
+        $this->db->from('cancha c');
+        $this->db->where('c.id', $id_cancha);
+        $query = $this->db->get();
+       
+        return $query->result()[0]->id_complejo;
+    }
 
 
 }
