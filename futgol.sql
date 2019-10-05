@@ -53,6 +53,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `pwd` VARCHAR(20) NOT NULL,
   `imagen` VARCHAR(200) NULL,
   `rol_id` INT NOT NULL,
+  `usuario` VARCHAR(45) NULL,
   PRIMARY KEY (`id`, `rol_id`),
   CONSTRAINT `fk_Usuario_Rol1`
     FOREIGN KEY (`rol_id`)
@@ -79,6 +80,7 @@ CREATE TABLE IF NOT EXISTS `complejo` (
   `telefono` VARCHAR(20) NULL,
   `email` VARCHAR(45) NULL,
   `usuario_id` INT NOT NULL,
+  `descripcion` VARCHAR(500) NULL,
   PRIMARY KEY (`id`, `usuario_id`),
   CONSTRAINT `fk_Complejo_Localidad1`
     FOREIGN KEY (`ciudad_id`)
@@ -115,20 +117,20 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `cancha` ;
 
 CREATE TABLE IF NOT EXISTS `cancha` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `complejo_id` INT NOT NULL,
   `jugadores` INT NOT NULL,
   `abierta` TINYINT(1) NOT NULL DEFAULT 1,
   `caracteristicas` VARCHAR(255) NULL,
-  `Tipo_superficie_id` INT NOT NULL,
-  PRIMARY KEY (`id`, `Tipo_superficie_id`),
+  `tipo_superficie_id` INT NOT NULL,
+  PRIMARY KEY (`id`, `tipo_superficie_id`),
   CONSTRAINT `fk_Cancha_Complejo`
     FOREIGN KEY (`complejo_id`)
     REFERENCES `complejo` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Cancha_Tipo_superficie1`
-    FOREIGN KEY (`Tipo_superficie_id`)
+    FOREIGN KEY (`tipo_superficie_id`)
     REFERENCES `tipo_superficie` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -136,33 +138,33 @@ ENGINE = InnoDB;
 
 CREATE INDEX `fk_Cancha_Complejo_idx` ON `cancha` (`complejo_id` ASC);
 
-CREATE INDEX `fk_Cancha_Tipo_superficie1_idx` ON `cancha` (`Tipo_superficie_id` ASC);
+CREATE INDEX `fk_Cancha_Tipo_superficie1_idx` ON `cancha` (`tipo_superficie_id` ASC);
 
 
 -- -----------------------------------------------------
--- Table `Usuario_Complejo`
+-- Table `usuario_complejo`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Usuario_Complejo` ;
+DROP TABLE IF EXISTS `usuario_complejo` ;
 
-CREATE TABLE IF NOT EXISTS `Usuario_Complejo` (
-  `Usuario_id` INT NOT NULL,
-  `Complejo_id` INT NOT NULL,
-  PRIMARY KEY (`Usuario_id`, `Complejo_id`),
-  CONSTRAINT `fk_Usuario_has_Complejo_Usuario1`
-    FOREIGN KEY (`Usuario_id`)
+CREATE TABLE IF NOT EXISTS `usuario_complejo` (
+  `usuario_id` INT NOT NULL,
+  `complejo_id` INT NOT NULL,
+  PRIMARY KEY (`usuario_id`, `complejo_id`),
+  CONSTRAINT `fk_usuario_has_complejo_usuario1`
+    FOREIGN KEY (`usuario_id`)
     REFERENCES `usuario` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Usuario_has_Complejo_Complejo1`
-    FOREIGN KEY (`Complejo_id`)
+  CONSTRAINT `fk_usuario_has_complejo_complejo1`
+    FOREIGN KEY (`complejo_id`)
     REFERENCES `complejo` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Usuario_has_Complejo_Complejo1_idx` ON `Usuario_Complejo` (`Complejo_id` ASC);
+CREATE INDEX `fk_usuario_has_complejo_complejo1_idx` ON `usuario_complejo` (`complejo_id` ASC);
 
-CREATE INDEX `fk_Usuario_has_Complejo_Usuario1_idx` ON `Usuario_Complejo` (`Usuario_id` ASC);
+CREATE INDEX `fk_usuario_has_complejo_usuario1_idx` ON `usuario_complejo` (`usuario_id` ASC);
 
 
 -- -----------------------------------------------------
@@ -175,6 +177,7 @@ CREATE TABLE IF NOT EXISTS `reserva` (
   `usuario_id` INT NOT NULL,
   `cancha_id` INT NOT NULL,
   `fecha` DATETIME NOT NULL,
+  `cancelada` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_Reserva_Usuario1`
     FOREIGN KEY (`usuario_id`)
@@ -221,6 +224,7 @@ CREATE TABLE IF NOT EXISTS `invitacion` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `usuario_id` INT NOT NULL,
   `partido_id` INT NOT NULL,
+  `aceptada` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_Invitacion_Usuario1`
     FOREIGN KEY (`usuario_id`)
@@ -240,30 +244,15 @@ CREATE INDEX `fk_Invitacion_Partido1_idx` ON `invitacion` (`partido_id` ASC);
 
 
 -- -----------------------------------------------------
--- Table `jugador`
+-- Table `dia_semana`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `jugador` ;
+DROP TABLE IF EXISTS `dia_semana` ;
 
-CREATE TABLE IF NOT EXISTS `jugador` (
-  `partido_id` INT NOT NULL,
-  `usuario_id` INT NULL,
+CREATE TABLE IF NOT EXISTS `dia_semana` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fk_Partido_has_Usuario_Partido1`
-    FOREIGN KEY (`partido_id`)
-    REFERENCES `partido` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Partido_has_Usuario_Usuario1`
-    FOREIGN KEY (`usuario_id`)
-    REFERENCES `usuario` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  `descripcion` VARCHAR(15) NOT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
-
-CREATE INDEX `fk_Partido_has_Usuario_Usuario1_idx` ON `jugador` (`usuario_id` ASC);
-
-CREATE INDEX `fk_Partido_has_Usuario_Partido1_idx` ON `jugador` (`partido_id` ASC);
 
 
 -- -----------------------------------------------------
@@ -281,10 +270,17 @@ CREATE TABLE IF NOT EXISTS `turno` (
     FOREIGN KEY (`cancha_id`)
     REFERENCES `cancha` (`id`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_turno_dia_semana1`
+    FOREIGN KEY (`dia`)
+    REFERENCES `dia_semana` (`id`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 CREATE INDEX `fk_Turno_Cancha1_idx` ON `turno` (`cancha_id` ASC);
+
+CREATE INDEX `fk_turno_dia_semana1_idx` ON `turno` (`dia` ASC);
 
 
 -- -----------------------------------------------------
@@ -321,7 +317,6 @@ CREATE TABLE IF NOT EXISTS `servicio` (
 ENGINE = InnoDB;
 
 
-
 -- -----------------------------------------------------
 -- Table `servicio_complejo`
 -- -----------------------------------------------------
@@ -330,21 +325,20 @@ DROP TABLE IF EXISTS `servicio_complejo` ;
 CREATE TABLE IF NOT EXISTS `servicio_complejo` (
   `servicio_id` INT NOT NULL,
   `complejo_id` INT NOT NULL,
-  `complejo_usuario_id` INT NOT NULL,
-  PRIMARY KEY (`servicio_id`, `complejo_id`, `complejo_usuario_id`),
+  PRIMARY KEY (`servicio_id`, `complejo_id`),
   CONSTRAINT `fk_Servicio_has_Complejo_Servicio1`
     FOREIGN KEY (`servicio_id`)
     REFERENCES `servicio` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Servicio_has_Complejo_Complejo1`
-    FOREIGN KEY (`complejo_id` , `complejo_usuario_id`)
-    REFERENCES `complejo` (`id` , `usuario_id`)
+    FOREIGN KEY (`complejo_id`)
+    REFERENCES `complejo` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Servicio_has_Complejo_Complejo1_idx` ON `servicio_complejo` (`complejo_id` ASC, `complejo_usuario_id` ASC);
+CREATE INDEX `fk_Servicio_has_Complejo_Complejo1_idx` ON `servicio_complejo` (`complejo_id` ASC);
 
 CREATE INDEX `fk_Servicio_has_Complejo_Servicio1_idx` ON `servicio_complejo` (`servicio_id` ASC);
 
@@ -389,6 +383,29 @@ COMMIT;
 
 START TRANSACTION;
 USE `futgol`;
-INSERT INTO usuario VALUES(1,'a@a.com','Alvaro','AA',1,'seu.8HpuOxyTU',NULL,1);
-INSERT INTO usuario VALUES(2, 'b@b.com', 'Beto', 'BB', 1, 'seu.8HpuOxyTU', NULL, 1);
+INSERT INTO usuario VALUES(1,'a@a.com','Alvaro','AA',1,'seu.8HpuOxyTU',NULL,1,'Alvaro');
+INSERT INTO usuario VALUES(2, 'b@b.com', 'Bb', 'BB', 1, 'seu.8HpuOxyTU', NULL, 1,'Beto');
+COMMIT;
+
+
+START TRANSACTION;
+USE `futgol`;
+INSERT INTO `futgol`.`dia_semana`(`id`,`descripcion`) VALUES ( NULL,'Lunes'); 
+INSERT INTO `futgol`.`dia_semana`(`id`,`descripcion`) VALUES ( NULL,'Martes'); 
+INSERT INTO `futgol`.`dia_semana`(`id`,`descripcion`) VALUES ( NULL,'Miércoles'); 
+INSERT INTO `futgol`.`dia_semana`(`id`,`descripcion`) VALUES ( NULL,'Jueves'); 
+INSERT INTO `futgol`.`dia_semana`(`id`,`descripcion`) VALUES ( NULL,'Viernes'); 
+INSERT INTO `futgol`.`dia_semana`(`id`,`descripcion`) VALUES ( NULL,'Sábado'); 
+INSERT INTO `futgol`.`dia_semana`(`id`,`descripcion`) VALUES ( NULL,'Domingo'); 
+COMMIT;
+
+START TRANSACTION;
+USE `futgol`;
+INSERT INTO servicio VALUES ('1', 'WiFi', 'icon-connection');
+INSERT INTO servicio VALUES ('2', 'Duchas', 'fa fa-shower');
+INSERT INTO servicio VALUES ('3', 'Bar', 'fa fa-beer');
+INSERT INTO servicio VALUES ('4', 'Estac. gratis', 'fa fa-etsy');
+INSERT INTO servicio VALUES ('5', 'Cumpleaños', 'fa fa-birthday-cake');
+INSERT INTO servicio VALUES ('6', 'Asador', 'glyphicon glyphicon-fire');
+INSERT INTO servicio VALUES ('7', 'Quincho', 'glyphicon glyphicon-cutlery');
 COMMIT;
