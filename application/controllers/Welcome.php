@@ -72,6 +72,7 @@ class Welcome extends CI_Controller {
 			);
 			$this->session->set_userdata($datosSesion);
 			$this->lista();
+			
 
 		} else {
 			$this->session->set_flashdata('errors', validation_errors());
@@ -164,6 +165,7 @@ class Welcome extends CI_Controller {
 		);
 		$this->session->set_userdata($datosSesion);
 
+		
 		$this->vistaDetalle();
 	}
 

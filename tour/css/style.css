@@ -1187,7 +1187,7 @@ article {
     float: left; }
   article .desc {
     padding: 3em;
-    width: 95%;
+    width: 100%;
     float: left;
     margin-top: -7em;
     z-index: 1;

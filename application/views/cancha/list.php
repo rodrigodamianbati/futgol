@@ -40,7 +40,7 @@
                     <td><?php echo $cancha->superficie_nombre; ?></td>
                     <td>
                       <a href="<?= base_url('canchas/edit/'.$cancha->id); ?>" title="Modificar" class="btn btn-xs" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                      <a href="<?= base_url('imagenes/lista/'.$cancha->id); ?>" title="Imágenes" class="btn btn-xs" role="button"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span></a>
+                      <a href="<?= base_url('turnos/porcancha/'.$cancha->id); ?>" title="Imágenes" class="btn btn-xs" role="button"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span></a>
                       <a href="<?= base_url('canchas/delete/'.$cancha->id); ?>" title="Borrar" class="btn btn-xs" href="#" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                     </td>
                   </tr>
