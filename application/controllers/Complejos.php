@@ -179,10 +179,10 @@ class Complejos extends Protegido {
 		$data['servicios'] = $servicios;
 
 		
-		$this->load->view('publico/header');
-		
+		$this->load->view('dash/header');
+		$this->load->view('dash/sidebar');
 		$this->load->view('complejo/detalles', $data);
-		$this->load->view('publico/footer');
+		$this->load->view('dash/footer');
 	}
 
 }

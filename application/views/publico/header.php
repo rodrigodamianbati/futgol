@@ -38,10 +38,6 @@
 	<!-- Theme style  -->
 	<link rel="stylesheet" href="<?= base_url(); ?>/tour/css/style.css">
 
-	<link rel="stylesheet" href="<?= base_url(); ?>/resources/dist/css/imagenes.css">
-
-	<link rel="stylesheet" href="<?= base_url(); ?>/resources/dist/css/detalles.css">
-
 	<!-- Modernizr JS -->
 	<script src="<?= base_url(); ?>/tour/js/modernizr-2.6.2.min.js"></script>
 	<!-- FOR IE9 below -->
