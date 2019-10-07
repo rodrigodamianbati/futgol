@@ -135,7 +135,7 @@ class Usuarios extends CI_Controller {
 		$this->validar();
 		$postData = new Usuarios_model();
 		//$postData->id = $this->input->post('id');
-		$postData->nombre = $this->input->post('usuario');
+		$postData->usuario = $this->input->post('usuario');
 		$postData->email = $this->input->post('email');
 		$postData->pwd = $this->input->post('password');
 
@@ -175,8 +175,7 @@ class Usuarios extends CI_Controller {
 	public function save(){
 		$this->validar_modif();
 		$postData = new Usuarios_model();
-		$postData->id = $this->input->post('id');
-		//$postData->usuario = $this->input->post('usuario');
+		$postData->usuario = $this->input->post('usuario');
 		$postData->email = $this->input->post('email');
 		$postData->nombre = $this->input->post('nombre');
 		$postData->apellido = $this->input->post('apellido');
@@ -208,8 +207,8 @@ class Usuarios extends CI_Controller {
 		if ($this->session->data['rol']==2){
 			redirect($this->lista);
 		}
-		//redirect('reservas');
-		redirect('ciudades');
+		redirect('reservas');
+		//redirect('ciudades');
 
 	}
 

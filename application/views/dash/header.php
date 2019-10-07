@@ -107,9 +107,7 @@ desired effect
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <!--
                   <a href="<?= base_url('usuarios/edit');?>/<?= $this->session->data['user_id']; ?>" class="btn btn-default btn-flat">Perfil</a>
-                  -->
                 </div>
                 <div class="pull-right">
                   <a href="<?= base_url('sesion/logout');?>" class="btn btn-default btn-flat">Cerrar sesión</a>

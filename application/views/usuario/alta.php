@@ -46,8 +46,8 @@
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="text" name="usuario" class="form-control" placeholder="Nombre" value="<?= set_value('usuario');?>">
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        <input type="text" name="usuario" class="form-control" placeholder="Nombre o Alias" value="<?= set_value('usuario');?>">
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
         <input type="password" name="password" class="form-control" placeholder="Contraseña" value="<?= set_value('password');?>">
