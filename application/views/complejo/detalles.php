@@ -66,11 +66,9 @@
 									<span class="label label-default">Precio por </span>
 									<span class="label label-success"><b>$</b></span>
 									</h3>
-									<p>
-									Desde el
-									</p>
-								
-												
+									<p>Fecha: <?=$this->session->datos->fecha?> </p>
+									<p>Hora: <?=$this->session->datos->hora?></p>
+									<p>Cantidad de jugadores: <?=$this->session->datos->jugadores?></p>				
 									<?php if (count($servicios)>0){?>
 									<h4>Servicios</h4>
 									<div class="row contact-info-wrap">
