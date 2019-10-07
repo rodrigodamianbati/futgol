@@ -55,7 +55,7 @@
 															<h4><?=$cancha->ciudad?></h4>
 															<h5><?=$cancha->tipo_superficie?>. Para <?=$cancha->jugadores?> jugadores.</h5>
 															
-															<form method="post" action="<?= base_url('welcome/ver');?>" >
+															<form method="post" action="<?= base_url('complejos/detalles/')+'<?=$cancha->cancha_id?>';?>" >
 																<input type="hidden" name="cancha_id" value="<?=$cancha->cancha_id?>">
 																<input type="hidden" name="fecha" value="<?=$this->session->datos->fecha?>">
 																<input type="hidden" name="hora" value="<?=$this->session->datos->hora?>">
