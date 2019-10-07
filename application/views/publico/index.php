@@ -69,7 +69,7 @@
 					<div class="search-wrap">
 						<div class="container">
 							<ul class="nav nav-tabs">
-								<li class="active"><a data-toggle="tab" href="#hotel"><i class="flaticon-resort"></i> Buscar un Turno</a></li>
+								<li class="active"><a data-toggle="tab" href="#hotel"><i class="flaticon-resort"></i> Buscar una Cancha</a></li>
 							</ul>
 						</div>
 						<div class="tab-content">
@@ -91,8 +91,8 @@
 				                    <label for="date">Fecha:</label>
 				                    <div class="form-field">
 				                      <i class="icon icon-calendar2"></i>
-				                      <input type="date" id="desde" name="desde" class="form-control" placeholder="Día del partido">
-															<?= form_error('desde', '<p class="text-danger">'); ?>
+				                      <input type="date" id="fecha" name="fecha" class="form-control" placeholder="Día del partido">
+															<?= form_error('fecha', '<p class="text-danger">'); ?>
 														</div>
 				                  </div>
 				                </div>
@@ -100,7 +100,7 @@
 				                  <div class="form-group">
 				                    <label for="date">Hora:</label>
 				                    <div class="form-field">
-				                      <input type="text" id="hora" name="hora" class="form-control" placeholder="Hora del partido">
+				                      <input type="time" id="hora" name="hora" class="form-control" placeholder="Hora del partido">
 															<?= form_error('hora', '<p class="text-danger">'); ?>
 														</div>
 				                  </div>

@@ -40,26 +40,26 @@
 									-->
 									<div class="row">
 										<?php 
-										if ($alojamientos){
-										foreach ($alojamientos as $alojamiento): 
+										if ($canchas){
+										foreach ($canchas as $cancha): 
 										?>
 										<div class="col-md-12 animate-box">
 											<div class="room-wrap">
 												<div class="row">
 													<div class="col-md-5 col-sm-6">
-														<div class="room-img" style="background-image: url(<?= base_url(); ?>/tour/images/img_bg_5.jpg);"></div>
+														<div class="room-img" style="background-image: url(<?= base_url(); ?>/uploads/<?= $cancha->imagen_nombre?>);"></div>
 													</div>
 													<div class="col-md-6 col-sm-6">
 														<div class="desc">
-															<h2><?=$alojamiento->nombre?></h2>
-															<h4><?=$alojamiento->ciudad?></h4>
-															<h5><?=$alojamiento->tipo_superficie?>. Para <?=$alojamiento->jugadores?> jugadores.</h5>
+															<h2><?=$cancha->nombre?></h2>
+															<h4><?=$cancha->ciudad?></h4>
+															<h5><?=$cancha->tipo_superficie?>. Para <?=$cancha->jugadores?> jugadores.</h5>
 															
 															<form method="post" action="<?= base_url('welcome/ver');?>" >
-																<input type="hidden" name="cancha_id" value="<?=$alojamiento->cancha_id?>">
-																<input type="hidden" name="desde" value="<?=$this->session->datos->desde?>">
-																<input type="hidden" name="hasta" value="<?=$this->session->datos->hasta?>">
-																<input type="hidden" name="pasajeros" value="<?=$this->session->datos->pasajeros?>">
+																<input type="hidden" name="cancha_id" value="<?=$cancha->cancha_id?>">
+																<input type="hidden" name="fecha" value="<?=$this->session->datos->fecha?>">
+																<input type="hidden" name="hora" value="<?=$this->session->datos->hora?>">
+																<input type="hidden" name="jugadores" value="<?=$this->session->datos->jugadores?>">
 																<input type="hidden" name="pagina" value="<?=$pagina?>">
 																<input type="submit" name="submit" id="submit" value="Ver MAS!" class="btn btn-primary" style="font-weight: bold;">
 															</form>

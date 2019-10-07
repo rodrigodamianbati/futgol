@@ -68,7 +68,7 @@
 								<li class="active"><a href="<?= base_url(); ?>">Inicio</a></li>
 								<!--<li><a href="about.html">Nosotros</a></li>-->
 								<?php if($this->session->data['username']){?>
-									<li><a href="<?= base_url('ciudades'); ?>">Administración</a></li>
+									<li><a href="<?= base_url('reservas'); ?>">Administración</a></li>
 									<li><a href="#"><b><?= $this->session->data['username']; ?></b></a></li>
 									<li><a href="<?= base_url('sesion/logout/'); ?>" class="btn btn-primary btn-outline"><b>Finalizar</b></a></li>
 								<?php } else {?>

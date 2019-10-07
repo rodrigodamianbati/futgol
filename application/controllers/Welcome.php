@@ -11,6 +11,9 @@ class Welcome extends CI_Controller {
 		$this->load->model('ciudades_model');
 		$this->load->model('reservas_model');
 		$this->load->model('canchas_model');
+		$this->load->model('complejos_model');
+		$this->load->model('ciudades_model');
+		$this->load->model('tipo_superficie_model');
 		$this->load->library('form_validation');
 		$this->load->library('pagination');
 	}
@@ -41,25 +44,24 @@ class Welcome extends CI_Controller {
 	}
 
 	public function validar(){
-		$this->form_validation->set_rules('desde', 'Desde', 'required');
+		$this->form_validation->set_rules('fecha', 'Fecha', 'required');
 		$this->form_validation->set_rules('hora', 'Hora', 'required');
 		$this->form_validation->set_rules('ciudades_id', 'Ciudad', 'required');
 		$this->form_validation->set_rules('jugadores', 'Jugadores', 'required');
 	}
 
 	public function validarReserva(){
-		$this->form_validation->set_rules('desde', 'Desde', 'required');
+		$this->form_validation->set_rules('fecha', 'Fecha', 'required');
 		$this->form_validation->set_rules('hora', 'Hora', 'required');
-		$this->form_validation->set_rules('alojamiento_id', 'Alojamiento', 'required');
 		$this->form_validation->set_rules('jugadores', 'Jugadores', 'required');
 	}
 
 	public function buscar(){
 		$data = new stdClass();
 		$data->ciudades_id = $this->input->post('ciudades_id');
-		$data->desde = $this->input->post('desde');
-		$data->hasta = $this->input->post('hora');
-		$data->pasajeros = $this->input->post('jugadores');
+		$data->fecha = $this->input->post('fecha');
+		$data->hora = $this->input->post('hora');
+		$data->jugadores = $this->input->post('jugadores');
 
 		$this->validar();
 		if($this->form_validation->run()==TRUE){
@@ -69,7 +71,6 @@ class Welcome extends CI_Controller {
 				'datos'		=> $data
 			);
 			$this->session->set_userdata($datosSesion);
-			//print_r($this->session->datos);
 			$this->lista();
 
 		} else {
@@ -83,15 +84,14 @@ class Welcome extends CI_Controller {
 		$ciudad = $this->session->datos->ciudades_id;
 		$data['pagina'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 1;
 		$start = ($this->uri->segment(3)) ? ($this->uri->segment(3)-1) * REGISTROS_PAGINA : 0;
-		//$data['alojamientos'] = $this->alojamientos_model->buscar($ciudad, $this->session->datos->desde, $this->session->datos->hasta, $this->session->datos->pasajeros);
-		$data['alojamientos'] = $this->canchas_model->get_current_page_records(
+		$data['canchas'] = $this->canchas_model->get_current_page_records(
 			$ciudad, 
-			$this->session->datos->desde, 
-			$this->session->datos->hasta, 
-			$this->session->datos->pasajeros,
+			$this->session->datos->fecha, 
+			$this->session->datos->hora, 
+			$this->session->datos->jugadores,
 			REGISTROS_PAGINA,
 			$start);
-		$data['cantidad'] = $this->canchas_model->cantidadCanchas($ciudad, $this->session->datos->desde, $this->session->datos->hasta, $this->session->datos->pasajeros);
+		$data['cantidad'] = $this->canchas_model->cantidadCanchas($ciudad, $this->session->datos->fecha, $this->session->datos->hora, $this->session->datos->jugadores);
 		//print_r($data);
 		//die;
 		//https://www.codeigniter.com/user_guide/libraries/pagination.html		
@@ -132,9 +132,31 @@ class Welcome extends CI_Controller {
 		$this->load->view('publico/footer');
 	}
 
+
 	public function ver($id=NULL){
+
 		$data = new stdClass();
+		$data->fecha = $this->input->post('fecha');
+		$data->hora = $this->input->post('hora');
+		$data->jugadores = $this->input->post('jugadores');
+		$data->ciudades_id = $this->session->datos->ciudades_id;
+
+		$data->cancha_id = $this->input->post('cancha_id');
+		$data->pagina = $this->input->post('pagina');
+
+		$cancha = $this->canchas_model->findById($data->cancha_id);
+		$complejo = $this->complejos_model->findById($cancha->complejo_id);
 		
+
+		$data->servicios = $this->canchas_model->servicios($complejo->id);
+		$data->imagenes = $this->canchas_model->imagenes($complejo->id);
+		$data->complejo = $complejo;
+		$data->cancha = $cancha;
+		$data->tipo_superficie = $this->tipo_superficie_model->findById($cancha->tipo_superficie_id);
+		$data->ciudad = $this->ciudades_model->findById($complejo->ciudad_id);
+
+		//print_r($data);
+		//die;
 		//Agregar datos a sesión
 		$datosSesion = array(
 			'formulario'  => 'ver',
@@ -157,33 +179,31 @@ class Welcome extends CI_Controller {
 	public function reservar($id=NULL){
 		$data = new stdClass();
 		$data->usuario_id = $this->session->data['user_id'];
-		//$data->turno_id = $this->input->post('turno_id');
-		$data->cancha_id = "5";
-		//$data->fecha = $this->input->post('fecha');
-		$data->fecha = '2019-09-27 03:00:00';
+		$data->cancha_id = $this->input->post('cancha_id');;
+		$data->fecha = $this->input->post('fecha').' '. $this->input->post('hora').':00';
 	
-			if ($this->tieneSesion()){
-				$reserva = new Reservas_model();
-				$postData = $reserva->toEntityObject(
-					'',
-					$data->usuario_id,
-					$data->cancha_id,
-					$data->fecha
-				);
-				try {
+		if ($this->tieneSesion()){
+			$reserva = new Reservas_model();
+			$postData = $reserva->toEntityObject(
+				'',
+				$data->usuario_id,
+				$data->cancha_id,
+				$data->fecha
+			);
+			try {
 				$this->reservas_model->insert($postData);
 				redirect('reservas');
 
-				} catch (Exception $ex) {
+			} catch (Exception $ex) {
 				$error_msg = $ex->getMessage();
 				$this->session->set_flashdata('error', $error_msg);
 				$this->ver();
 			}
-	
-			} else {
-				// Loguearse o crear usuario, pasando referer.
-				redirect('sesion/login');
-			}
+
+		} else {
+			// Loguearse o crear usuario, pasando referer.
+			redirect('sesion/login');
+		}
 
 	}
 
