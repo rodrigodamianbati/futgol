@@ -30,6 +30,15 @@
         <form role="form" action="<?= base_url('canchas/save');?>" method="post" >
           <input type="hidden" id="id" name="id" value="<?= ($cancha)?$cancha->id:''; ?>">
           <div class="box-body">
+          <div class="form-group">
+              <div class="row">
+                <div class="col-md-12">
+                  <label for="nombre">Nombre</label>
+                  <input type="text" class="form-control" id="nombre" name="nombre"  placeholder="Nombre de la cancha" value="<?= ($cancha)?$cancha->nombre:''; ?>">
+                  <?= form_error('nombre', '<p class="text-danger">'); ?>
+                </div>
+              </div>
+            </div>
             <div class="form-group">
               <div class="row">
                 <div class="col-md-12">

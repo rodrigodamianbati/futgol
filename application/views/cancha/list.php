@@ -24,6 +24,7 @@
             <div class="box-body table-responsive no-padding">
               <table class="table table-hover">
                 <thead>
+                  <th>Nombre</th>
                   <th>Complejo</th>
                   <th>Jugadores</th>
                   <th>Abierta</th>
@@ -33,6 +34,7 @@
                 <tbody>
                   <?php foreach ($canchas as $cancha): ?>
                   <tr>
+                   <td><?php echo $cancha->nombre; ?></td>
                     <td><?php echo $cancha->complejo_nombre; ?></td>
                     <td><?php echo $cancha->jugadores; ?></td>
                     <td><?php echo ($cancha->abierta == 1)?'SI':'NO'; ?></td>

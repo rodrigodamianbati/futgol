@@ -13,10 +13,10 @@ class Canchas_model extends Objeto_model {
      * Construye una entidad a partir de los elementos que la forman
      * Retorna una entidad
      */
-    public function toEntityObject($id, $complejo_id,$jugadores,$abierta,$caracteristicas,$tipo_superficie_id ){
+    public function toEntityObject($id, $complejo_id,$jugadores,$abierta,$caracteristicas,$tipo_superficie_id,$nombre ){
       $entidad = new Canchas_model();
       $entidad->id = $id;
-    //  $entidad->nombre = $nombre;
+      $entidad->nombre = $nombre;
       $entidad->complejo_id = $complejo_id;
       $entidad->jugadores = $jugadores;
       $entidad->abierta = $abierta;

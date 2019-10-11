@@ -19,12 +19,13 @@ class Canchas extends Protegido {
 		//Agregar a los datos del post el id de usuario actual.
 		$postData = $cancha->toEntityObject(
 			$this->input->post('id'),
-		//	$this->input->post('nombre'),
 			$this->input->post('complejo_id'),
 			$this->input->post('jugadores'),
 			$this->input->post('abierta'),
 			$this->input->post('caracteristicas'),
-			$this->input->post('tipo_superficie_id')
+			$this->input->post('tipo_superficie_id'),
+			$this->input->post('nombre')
+
 		);
 
 		$this->saveOrUpdate($id, $postData);
@@ -32,7 +33,7 @@ class Canchas extends Protegido {
 	}
 
 	public function validar(){
-		//$this->form_validation->set_rules('nombre', 'Nombre', 'max_length[30]');
+		$this->form_validation->set_rules('nombre', 'Nombre', 'max_length[30]');
 		$this->form_validation->set_rules('complejo_id', 'Complejo', 'required');
 		$this->form_validation->set_rules('jugadores', 'Jugadores', 'required|numeric');
 		$this->form_validation->set_rules('abierta', 'Abierta', 'required');
