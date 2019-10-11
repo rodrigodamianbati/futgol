@@ -91,8 +91,8 @@ class Canchas_model extends Objeto_model {
       $this->db->where('ca.jugadores', $jugadores);
       $this->db->where("ca.id NOT IN (select re.cancha_id from reserva re where re.fecha = '$fecha $hora:00') ");
       $this->db->where('tu.dia', $fechaNumero);
-      $this->db->where('tu.hora', $hora);
-
+      $this->db->where('hora_hasta >=', $hora);
+      $this->db->where('hora_desde <=', $hora);
       /*
       // Filtra por rangos de fechas
       $this->db->where("NOT (EXISTS(SELECT res.id 
