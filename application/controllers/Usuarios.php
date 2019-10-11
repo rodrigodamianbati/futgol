@@ -244,5 +244,8 @@ class Usuarios extends CI_Controller {
 			//redirect($this->lista);
 		}
 	}
-
+	public function devolverUsuario(){
+		$data= $this->modelo->findByEmail($this->input->post('email'));
+		echo json_encode($data);
+	}
 }

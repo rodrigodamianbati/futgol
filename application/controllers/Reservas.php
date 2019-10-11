@@ -36,10 +36,20 @@ class Reservas extends Protegido {
 	}
 
 	public function index(){
-		$reservasDelUsuario = $this->reservas_model->listarPorUsuario();
-		$data['reservas'] = $reservasDelUsuario;
+		$data['reservas'] = $this->reservas_model->listarPorUsuario();
 		parent::mostrarLista($data);
 	}
-
+	//reservas pedidas a las canchas del dueño
+	public function reservasPedidas(){
+		$data['reservasPedidas'] = $this->reservas_model->listarReservasPedidas();
+		$this->mostrarLista($data);
+	}
+	public function mostrarLista($data){
+		$cabecera="";
+		$this->load->view('dash/header', $cabecera);
+		$this->load->view('dash/sidebar');
+		$this->load->view('reservaPedida/list', $data);
+		$this->load->view('dash/footer');
+	}
 
 }

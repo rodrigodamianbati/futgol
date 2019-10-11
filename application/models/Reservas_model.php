@@ -28,7 +28,7 @@ Class Reservas_model extends Objeto_model {
          $insert = $this->db->insert($this->tabla, $data);
          $error = $this->db->error();
          if ($error['code']==1062) {
-           throw new Exception('No se puede reservar el turno, otra persona ya lo hizo.');
+           throw new Exception('No se puede reservar el turno, el mismo ya fue reservado.');
          return false; // unreachable retrun statement !!!
            }
          if($insert){
@@ -39,15 +39,28 @@ Class Reservas_model extends Objeto_model {
   
       }
       public function listarPorUsuario(){
-        $this->db->select('r.*');
+        $this->db->select('r.* , c.nombre as cancha_nombre');
         $this->db->from('usuario u');
         $this->db->join('reserva r', 'r.usuario_id = u.id');
         $this->db->join('cancha c', 'r.cancha_id = c.id');
-        $this->db->where('u.id', $_SESSION['data']['user_id']);
+        $this->db->join('complejo co', 'c.complejo_id = co.id');
+  
+        $this->db->where('co.usuario_id', $_SESSION['data']['user_id']);
         $query = $this->db->get();
         return $query->result();
     }
 
-  
+    public function listarReservasPedidas(){
+      $this->db->select('r.* , u.*, u.nombre as usuario_nombre,u.apellido as usuario_apellido, co.nombre as complejo_nombre, c.nombre  as cancha_nombre ');
+      $this->db->from('usuario u');
+      $this->db->join('reserva r', 'r.usuario_id = u.id');
+      $this->db->join('cancha c', 'r.cancha_id = c.id');
+      $this->db->join('complejo co', 'c.complejo_id = co.id');
+
+      $this->db->where('co.usuario_id', $_SESSION['data']['user_id']);
+      $query = $this->db->get();
+      return $query->result();
+  }
+
 
 }

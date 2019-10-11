@@ -30,9 +30,7 @@
                     <td><?= date("d/m/Y", strtotime($reserva->fecha)); ?></td>
                     <td><?= date("H:i:s", strtotime($reserva->fecha)); ?></td>
                     <td>
-                    <a href="javascript:void(0);" onclick="verCancha('<?=$reserva->cancha_id?>');" class="btn btn-xs" role="button">Ver información</a>
-                    <!--<a href="<?//= base_url('canchas/view/'.$reserva->cancha_id); ?>" class="btn btn-xs" role="button"><?//=$reserva->cancha_nombre ?></a> -->
-
+                    <a href="javascript:void(0);" onclick="verCancha('<?=$reserva->cancha_id?>');" class="btn btn-xs" role="button"><?=$reserva->cancha_nombre?></a>
                     </td>
                   </tr>
                   <?php endforeach; ?>

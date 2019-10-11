@@ -34,7 +34,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <li class="header">PROPIETARIO</li>
         <li class="active"><a href="<?= base_url('complejos'); ?>"><i class="fa fa-home"></i> <span>Mis complejos</span></a></li>
         <li class="active"><a href="<?= base_url('canchas'); ?>"><i class="fa fa-home"></i> <span>Mis canchas</span></a></li>
-        <li class="active"><a href="#"><i class="fa fa-sun-o"></i> <span>Pedidos de reserva</span></a></li>
+        <li class="active"><a href="<?= base_url('reservas/reservaspedidas'); ?>"><i class="fa fa-sun-o"></i> <span>Pedidos de reserva</span></a></li>
 
 
       </ul>
