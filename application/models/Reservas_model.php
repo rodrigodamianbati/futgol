@@ -40,12 +40,9 @@ Class Reservas_model extends Objeto_model {
       }
       public function listarPorUsuario(){
         $this->db->select('r.* , c.nombre as cancha_nombre');
-        $this->db->from('usuario u');
-        $this->db->join('reserva r', 'r.usuario_id = u.id');
+        $this->db->from('reserva r');
         $this->db->join('cancha c', 'r.cancha_id = c.id');
-        $this->db->join('complejo co', 'c.complejo_id = co.id');
-  
-        $this->db->where('co.usuario_id', $_SESSION['data']['user_id']);
+        $this->db->where('r.usuario_id', $_SESSION['data']['user_id']);
         $query = $this->db->get();
         return $query->result();
     }
