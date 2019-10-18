@@ -9,13 +9,14 @@ class Reservas extends Protegido {
 		$this->load->model('usuarios_model');
 		$this->load->model('reservas_model');
 		$this->load->model('canchas_model');
+		$this->load->model('partidos_model');
 	}
 
 	public function save(){
 		$id = $this->input->post('id');
 		//prepare post data
 		$reserva = new Reservas_model();
-		$postData = $complejo->toEntityObject(
+		$postData = $reserva->toEntityObject(
             $this->input->post('id'),
             $this->input->post('usuario_id'),
             $this->input->post('turno_id'),
@@ -23,6 +24,8 @@ class Reservas extends Protegido {
 		);
 
 		$this->saveOrUpdate($id, $postData);
+
+		
 	}
 
 	public function validar(){

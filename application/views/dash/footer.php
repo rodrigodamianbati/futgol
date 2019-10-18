@@ -19,6 +19,10 @@
 <!-- AdminLTE App -->
 <script src="<?= base_url(); ?>resources/dist/js/adminlte.min.js"></script>
 
+<script src="<?= base_url(); ?>resources/js/partidos.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->

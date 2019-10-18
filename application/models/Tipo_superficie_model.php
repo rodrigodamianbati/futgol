@@ -27,5 +27,12 @@ class Tipo_superficie_model extends Objeto_model {
 		$this->update($tipo_superficie, $id);        
     }
 
+    public function tipo_superficie($id){
+      $this->db->select('*');
+      $this->db->from('tipo_superficie ts');
+      $this->db->where('ts.id',$id);
+      $query = $this->db->get();
+      return $query->result()[0];
+    }
 
 }

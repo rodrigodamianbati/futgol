@@ -59,5 +59,20 @@ Class Reservas_model extends Objeto_model {
       return $query->result();
   }
 
+  public function reserva($id_reserva){
+      $this->db->select('*');
+      $this->db->from('reserva r');
+      $this->db->where('r.id', $id_reserva);
+      $query = $this->db->get();
+      return $query->result()[0];
+  }
+
+  public function cancha(){
+    $this->db->select('*');
+    $this->db->from('cancha c');
+    $this->db->where('cancha', $this->cancha_id);
+    $query = $this->db->get();
+    return $query->result()[0];
+  }
 
 }

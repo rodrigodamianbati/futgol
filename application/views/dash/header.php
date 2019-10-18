@@ -24,6 +24,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
   <link rel="stylesheet" href="<?= base_url(); ?>resources/dist/css/imagenes.css">
 
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>

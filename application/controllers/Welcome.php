@@ -9,6 +9,7 @@ class Welcome extends CI_Controller {
 		parent::__construct();
 		$this->load->helper('url_helper');
 		$this->load->model('ciudades_model');
+		$this->load->model('partidos_model');
 		$this->load->model('reservas_model');
 		$this->load->model('canchas_model');
 		$this->load->model('complejos_model');
@@ -191,7 +192,8 @@ class Welcome extends CI_Controller {
 				$data->fecha
 			);
 			try {
-				$this->reservas_model->insert($postData);
+				$id_reserva= $this->reservas_model->insert($postData);
+				$this->nuevoPartido($id_reserva);
 				redirect('reservas');
 
 			} catch (Exception $ex) {
@@ -205,6 +207,12 @@ class Welcome extends CI_Controller {
 			redirect('sesion/login');
 		}
 
+	}
+
+	public function nuevoPartido($id_reserva){
+		print_r($id_reserva);
+		$partido = new Partidos_model();
+		$partido->nuevoPartido($id_reserva);
 	}
 
 	private function tieneSesion(){
