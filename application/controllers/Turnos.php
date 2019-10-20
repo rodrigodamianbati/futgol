@@ -74,7 +74,6 @@ class Turnos extends Protegido {
         parent::create($this->relaciones($this->uri->segment(3)));
     }
 
-
     /**
      * Borra un objeto dado su id
      */
@@ -110,7 +109,5 @@ class Turnos extends Protegido {
         parent::mostrarLista($data);
     }
 
-    public function index(){
-
-    }
+    public function index() { }
 }
