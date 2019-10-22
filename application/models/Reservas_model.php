@@ -25,7 +25,7 @@ Class Reservas_model extends Objeto_model {
      * Persiste un objeto dado
      */
     public function insert($data = array()) {
-         $insert = $this->db->insert($this->tabla, $data);
+         $insert = $this->db->insert('reserva', $data);
          $error = $this->db->error();
          if ($error['code']==1062) {
            throw new Exception('No se puede reservar el turno, el mismo ya fue reservado.');
