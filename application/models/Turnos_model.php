@@ -13,18 +13,19 @@ class Turnos_model extends Objeto_model {
      * Construye una entidad a partir de los elementos que la forman
      * Retorna una entidad
      */
-    public function toEntityObject($id,$dia,$hora,$cancha_id ){
+    public function toEntityObject($id,$dia,$hora_desde,$hora_hasta,$cancha_id ){
         $entidad = new Turnos_model();
         $entidad->id = $id;
         $entidad->dia = $dia;
-        $entidad->hora = $hora;
+        $entidad->hora_desde = $hora_desde;
+        $entidad->hora_hasta = $hora_hasta;
         $entidad->cancha_id = $cancha_id;
         return $entidad;
     }
 
 
     public function listarPorCancha($cancha_id){
-        $this->db->select('turno.id, turno.hora, dia_semana.descripcion as dia');
+        $this->db->select('turno.id, turno.hora_desde, turno.hora_hasta, dia_semana.descripcion as dia');
         $this->db->from('turno');
         $this->db->join('dia_semana', 'turno.dia = dia_semana.id');
         $this->db->where('turno.cancha_id', $cancha_id);
@@ -32,5 +33,6 @@ class Turnos_model extends Objeto_model {
         return $query->result();
 
     }
+
 
 }

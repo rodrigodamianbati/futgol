@@ -15,64 +15,98 @@ class Turnos extends Protegido {
         $id = $this->input->post('id');
         //prepare post data
         $turnos = new Turnos_model();
+        if(!$id) {
+            foreach ($this->input->post('dias') as $dia) {
+                $postData = $turnos->toEntityObject(
+                    $this->input->post('id'),
+                    $dia,
+                    $this->input->post('hora_desde'),
+                    $this->input->post('hora_hasta'),
+                    $this->input->post('cancha_id')
+                );
 
-        //Agregar a los datos del post el id de usuario actual.
-        $postData = $turnos->toEntityObject(
-            $this->input->post('id'),
-            $this->input->post('dia'),
-            $this->input->post('hora'),
-            $this->input->post('cancha_id')
-        );
+                $this->saveOrUpdate($id, $postData);
 
-        $this->saveOrUpdate($id, $postData);
+            }
+        }else{
+            $postData = $turnos->toEntityObject(
+                $this->input->post('id'),
+                $this->input->post('dias'),
+                $this->input->post('hora_desde'),
+                $this->input->post('hora_hasta'),
+                $this->input->post('cancha_id')
+            );
+
+            $this->saveOrUpdate($id, $postData);
+        }
+
+        $this->porcancha($postData->cancha_id);
 
     }
 
     public function validar(){
         $this->form_validation->set_rules('dia', 'Dia', 'required');
-        $this->form_validation->set_rules('hora', 'Hora', 'required');
+        $this->form_validation->set_rules('hora_desde', 'Hora Desde', 'required');
+        $this->form_validation->set_rules('hora_hasta', 'Hora Hasta', 'required');
         $this->form_validation->set_rules('cancha_id', 'Cancha', 'required');
     }
 
     private function relaciones($id = NULL, $data = NULL){
         // cancha relacionada
         $cancha = $this->canchas_model->getById($id);
-        $data['cancha'][$cancha[0]->id] = $cancha[0]->jugadores . ' jugadores - ' . $cancha[0]->caracteristicas;
-
+        $datos['cancha'][$cancha[0]->id] = $cancha[0]->jugadores . ' jugadores - ' . $cancha[0]->caracteristicas;
         //dias para seleccionar
-        $res_dias= $this->dias_model->findAll();
+        $d = array();
         $dias = array();
-        foreach ($res_dias as $dia){
-            $dias[$dia->id] = $dia->descripcion;
+        if(!$data){
+            $res_dias = $this->dias_model->findAll();
+            foreach ($res_dias as $dia){
+                $d['name'] = 'dias[]';
+                $d['value'] = $dia->id;
+                $d['nombre'] = $dia->descripcion;
+                array_push($dias, $d);
+            }
+        }else{
+            $turno = $this->turnos_model->findById($data);
+            $res_dias = $this->dias_model->findById($turno->dia);
+            $d['name'] = 'dias[]';
+            $d['value'] = $res_dias->id;
+            $d['nombre'] = $res_dias->descripcion;
+            $d['readonly'] = 'readonly';
+            $d['onclick'] = "javascript: return false;";
+            array_push($dias, $d);
         }
-        $data['dias'] = $dias;
+
+        $datos['dias'] = $dias;
 
         //horas para seleccionar
-        $horas[12] = "12 hs";
-        $horas[13] = "13 hs";
-        $horas[14] = "14 hs";
-        $horas[15] = "15 hs";
-        $horas[16] = "16 hs";
-        $horas[17] = "17 hs";
-        $horas[18] = "18 hs";
-        $horas[19] = "19 hs";
-        $horas[20] = "20 hs";
-        $horas[21] = "21 hs";
-        $horas[22] = "22 hs";
-        $horas[23] = "23 hs";
-        $horas[00] = "00 hs";
-        $data['horas'] = $horas;
+        $horas['12:00:00'] = "12:00";
+        $horas['13:00:00'] = "13:00";
+        $horas['14:00:00'] = "14:00";
+        $horas['15:00:00'] = "15:00";
+        $horas['16:00:00'] = "16:00";
+        $horas['17:00:00'] = "17:00";
+        $horas['18:00:00'] = "18:00";
+        $horas['19:00:00'] = "19:00";
+        $horas['20:00:00'] = "20:00";
+        $horas['21:00:00'] = "21:00";
+        $horas['22:00:00'] = "22:00";
+        $horas['23:00:00'] = "23:00";
+        $horas['00:00:00'] = "00:00";
+        $datos['horas'] = $horas;
 
-        return $data;
+        return $datos;
     }
 
-    public function edit($id = NULL, $data = NULL){
-        parent::edit($id, $this->relaciones($this->uri->segment(3), $data));
+
+
+    public function edit($id = NULL, $idturno = NULL){
+        parent::edit($idturno, $this->relaciones($id,$idturno));
+    }
+    public function create($id = NULL){
+        parent::create($this->relaciones($id));
     }
 
-    public function create($data = NULL){
-        parent::create($this->relaciones($this->uri->segment(3)));
-    }
 
     /**
      * Borra un objeto dado su id
@@ -85,21 +119,13 @@ class Turnos extends Protegido {
     }
 
     public function saveOrUpdate($id, $postData){
-        $this->validar();
 
-        if($this->form_validation->run()==TRUE){
-            if ($id){
-                $this->modelo->update($postData, $id);
-            } else {
-                $this->modelo->insert($postData);
-            }
-            $this->saveAdicional($postData);
-            $this->porcancha($postData->cancha_id);
+        if ($id){
+            $this->modelo->update($postData, $id);
         } else {
-            $this->session->set_flashdata('errors', validation_errors());
-            $data['turno'] = $postData;
-            $this->mostrarForm($data);
+            $this->modelo->insert($postData);
         }
+
     }
 
     public function porcancha($id = NULL){
@@ -109,5 +135,7 @@ class Turnos extends Protegido {
         parent::mostrarLista($data);
     }
 
-    public function index() { }
+    public function index(){
+
+    }
 }

@@ -25,15 +25,17 @@
               <table class="table table-hover">
                 <thead>
                   <th>Día</th>
-                  <th>Hora</th>
+                  <th>Hora Desde</th>
+                  <th>Hora Hasta</th>
                 </thead>
                 <tbody>
                   <?php foreach ($turnos as $turno): ?>
                   <tr>
                     <td><?php echo $turno->dia; ?></td>
-                    <td><?php echo $turno->hora; ?> hs</td>
+                    <td><?php echo date("H:i", strtotime($turno->hora_desde)); ?> hs</td>
+                    <td><?php echo date("H:i", strtotime($turno->hora_hasta)); ?> hs</td>
                     <td>
-                      <a href="<?= base_url('turnos/edit/'.$turno->id); ?>" title="Modificar" class="btn btn-xs" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                      <a href="<?= base_url('turnos/edit/'.$cancha_id.'/'.$turno->id); ?>" title="Modificar" class="btn btn-xs" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                       <a href="<?= base_url('turnos/delete/'.$turno->id.'/'.$cancha_id); ?>" title="Borrar" class="btn btn-xs" href="#" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                     </td>
                   </tr>

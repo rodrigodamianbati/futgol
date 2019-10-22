@@ -42,24 +42,36 @@
             <div class="form-group">
               <div class="row">
                 <div class="col-md-6">
-                  <label for="dia">Día</label>
-                    <?=form_dropdown('dia', $dias, ($turno)?$turno->dia:'', 'class="form-control"'); ?>
-                    <?= form_error('dia', '<p class="text-danger">'); ?>
+                    <div class="col-md-6">
+                        <label for="dia">Días</label>
+                        <?php foreach ($dias as $dia): ?>
+                            <br>
+                            <?=form_checkbox( $dia,'',($turno)?$turno->dia:'', ''); ?>
+                            <?= form_error('dia', '<p class="text-danger">'); ?>
+                            <?= $dia['nombre'] ?>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
                 <div class="col-md-6">
-                  <label for="hora">Hora</label><br>
-                    <?=form_dropdown('hora', $horas, ($turno)?$turno->hora:'', 'class="form-control"'); ?>
-                    <?= form_error('hora', '<p class="text-danger">'); ?>
+                    <div class="col-md-12">
+                      <label for="hora">Hora Desde</label><br>
+                        <?=form_dropdown('hora_desde', $horas, ($turno)?$turno->hora_desde:'', 'class="form-control"'); ?>
+                        <?= form_error('hora_desde', '<p class="text-danger">'); ?>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="hora">Hora Hasta</label><br>
+                        <?=form_dropdown('hora_hasta', $horas, ($turno)?$turno->hora_hasta:'', 'class="form-control"'); ?>
+                        <?= form_error('hora_hasta', '<p class="text-danger">'); ?>
+                    </div>
                 </div>
               </div>
             </div>
-
           </div>
           <!-- /.box-body -->
 
           <div class="box-footer">
             <button type="submit" class="btn btn-primary">Guardar</button>
-            <a class="btn btn-default" href="<?= base_url();?>turnos/porcancha/<?= $turno->cancha_id;?>" role="button">Volver</a>
+            <a class="btn btn-default" href="<?=base_url();?>turnos/porcancha/"<?= ($turno)?$turno->id:''; ?> role="button">Volver</a>
           </div>
         </form>
       </div>
