@@ -7,8 +7,9 @@
         <!--<small>Optional description</small>-->
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
+      <li><a href="#"><i class="fa fa-dashboard"></i> Administración</a></li>
+        <li><a href="<?= base_url('complejos');?>">Complejos</a></li>
+        <li class="active">Imagenes</li>
       </ol>
     </section>
 
