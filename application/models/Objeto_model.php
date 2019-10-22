@@ -4,8 +4,8 @@
  */
 class Objeto_model extends CI_Model {
 
-    protected $tabla = '';
-    protected $id = '';
+    private $tabla = '';
+    private $id = '';
 
     /**
      * Constructor
