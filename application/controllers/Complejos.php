@@ -72,7 +72,6 @@ class Complejos extends Protegido {
 			$this->session->set_flashdata('errors', validation_errors());
 			$data['complejo'] = $postData;
 			$data['ciudades'] = $this->ciudades_model->findAllAsArray();
-			print_r($data['complejo']);
 			$this->mostrarForm($data);
 		}
 	}

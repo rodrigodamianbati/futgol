@@ -31,7 +31,8 @@ class Partidos_model extends Objeto_model {
         $this->db->from('partido p');
         $this->db->where('p.id', $id_partido);
         $query = $this->db->get();
-        if ($query->result().lenth == 0){
+        if (empty($query->result())){
+        //if ($query->num_rows() == 0){
             return $query->result();
         }
         else {
