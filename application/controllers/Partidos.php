@@ -17,18 +17,14 @@ class Partidos extends Protegido {
 
     public function index(){
         $partidos = $this->partidos_model->listarPorUsuario();
-        $fecha_actual = date("d/m/Y");
-        $hora_actual = date("H:i:s");
+        $fecha_hora_actual = date("Y-m-d H:i:s");
         $partidos_proximos = array();
         $partidos_anteriores = array();
         foreach ($partidos as $partido){
-            if (
-                (date("d/m/Y", strtotime($partido->fecha)) >= $fecha_actual)
-                &&
-                (date("H:i:s", strtotime($partido->fecha)) >= $hora_actual)
-                ){
+            //echo (date("d/m/Y H:i:s", strtotime($partido->fecha)) >= $fecha_hora_actual);
+            if ($partido->fecha >= $fecha_hora_actual) {
                 array_push($partidos_proximos, $partido);
-            }else{
+            }else {
                 array_push($partidos_anteriores, $partido);
             }
         }
