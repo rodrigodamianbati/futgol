@@ -16,9 +16,27 @@ class Partidos extends Protegido {
     }
 
     public function index(){
-        $data['partidos'] = $this->partidos_model->listarPorUsuario();
+        $partidos = $this->partidos_model->listarPorUsuario();
+        $fecha_actual = date("d/m/Y");
+        $hora_actual = date("H:i:s");
+        $partidos_proximos = array();
+        $partidos_anteriores = array();
+        foreach ($partidos as $partido){
+            if (
+                (date("d/m/Y", strtotime($partido->fecha)) >= $fecha_actual)
+                &&
+                (date("H:i:s", strtotime($partido->fecha)) >= $hora_actual)
+                ){
+                array_push($partidos_proximos, $partido);
+            }else{
+                array_push($partidos_anteriores, $partido);
+            }
+        }
+
         $cabecera="";
-		$this->load->view('dash/header', $cabecera);
+        $data['partidos_proximos'] = $partidos_proximos;
+        $data['partidos_anteriores'] = $partidos_anteriores;
+        $this->load->view('dash/header', $cabecera);
 		$this->load->view('dash/sidebar');
 		$this->load->view('partido/listado', $data);
 		$this->load->view('dash/footer');

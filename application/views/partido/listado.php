@@ -16,31 +16,68 @@
 
 <div class="box">
   <!-- /.box-header -->
+    <div class="box-header">
+        <h2>
+            Próximos Partidos
+        </h2>
+    </div>
+    <div class="box-body table-responsive no-padding">
+
+        <table class="table table-hover">
+          <thead>
+            <th>Cancha</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+          </thead>
+          <tbody>
+            <?php foreach ($partidos_proximos as $partido): ?>
+            <tr>
+              <td> <?=$partido->nombre; ?>
+              <td><?= date("d/m/Y", strtotime($partido->fecha)); ?></td>
+              <td><?= date("H:i:s", strtotime($partido->fecha)); ?></td>
+              <td> <a href="<?= base_url('partidos/administrar/'.$partido->id); ?>" class="btn btn-xs" role="button"><span aria-hidden="true">Administrar y ver detalles</span></a>
+
+              </td>
+            </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+    </div>
+  <!-- /.box-body -->
+</div>
+<!-- /.box -->
+<div class="box">
+  <!-- /.box-header -->
+  <div class="box-header">
+      <h2>
+        Partidos Anteriores
+      </h2>
+  </div>
   <div class="box-body table-responsive no-padding">
-    <table class="table table-hover">
-      <thead>
-        <th>Cancha</th>
-        <th>Fecha</th>
-        <th>Hora</th>
-      </thead>
-      <tbody>
-        <?php foreach ($partidos as $partido): ?>
-        <tr>
-          <td> <?=$partido->nombre; ?>
-          <td><?= date("d/m/Y", strtotime($partido->fecha)); ?></td>
-          <td><?= date("H:i:s", strtotime($partido->fecha)); ?></td>
-          <td> <a href="<?= base_url('partidos/administrar/'.$partido->id); ?>" class="btn btn-xs" role="button"><span aria-hidden="true">Administrar y ver detalles</span></a>
-          
-          </td>
-        </tr>
-        <?php endforeach; ?>
-      </tbody>
-    </table>
+
+      <table class="table table-hover">
+          <thead>
+          <th>Cancha</th>
+          <th>Fecha</th>
+          <th>Hora</th>
+          </thead>
+          <tbody>
+          <?php foreach ($partidos_anteriores as $partido): ?>
+              <tr>
+                  <td> <?=$partido->nombre; ?>
+                  <td><?= date("d/m/Y", strtotime($partido->fecha)); ?></td>
+                  <td><?= date("H:i:s", strtotime($partido->fecha)); ?></td>
+                 <!-- <td> <a href="<?= base_url('partidos/administrar/'.$partido->id); ?>" class="btn btn-xs" role="button"><span aria-hidden="true">Administrar y ver detalles</span></a>-->
+
+                  </td>
+              </tr>
+          <?php endforeach; ?>
+          </tbody>
+      </table>
   </div>
   <!-- /.box-body -->
 </div>
 <!-- /.box -->
-
 
 </section>
 <!-- /.content -->
