@@ -47,6 +47,21 @@ class Partidos extends Protegido {
         $cancha = $this->canchas_model->getById($reserva->cancha_id)[0];
         $tipo_superficie = $this->tipo_superficie_model->tipo_superficie($cancha->tipo_superficie_id);
         $jugadores = $this->partidos_model->jugadores($id_partido);
+        $admin = $this->jugadores_model->es_administrador($id_partido,$_SESSION['data']['user_id']);
+
+        $permisos = $this->jugadores_model->permisos($id_partido,$_SESSION['data']['user_id']);
+        
+        //print_r($permisos);
+        //die();
+        //print_r($admin[0]->administrador);
+        
+        $this->session->es_admin = $admin[0]->administrador;
+
+       
+        $this->session->permisos = $permisos[0]->permisos;
+        //print_r("llegue");
+        //print_r($admin);
+        //die();
 
         $data['partido'] = $partido;
         $data['reserva'] = $reserva;
@@ -95,6 +110,22 @@ class Partidos extends Protegido {
         $this->partidos_model->cancelar_invitacion($id_partido, $id_jugador);
 
         $this->session->invitacion_cancelada = '1';
+
+        redirect('/partidos/administrar/'.$id_partido, 'refresh');
+    }
+
+    public function dar_permisos_invitacion(){
+
+        $id_jugador = $this->input->post('id_jugador');
+        $id_partido = $this->input->post('id_partido');
+        $permisos = $this->input->post('permisos');
+        
+        if($permisos == 0){
+            $this->partidos_model->dar_permisos_invitacion($id_partido, $id_jugador);
+        }else{
+            $this->partidos_model->quitar_permisos_invitacion($id_partido, $id_jugador);
+        }
+        //$this->session->invitacion_cancelada = '1';
 
         redirect('/partidos/administrar/'.$id_partido, 'refresh');
     }

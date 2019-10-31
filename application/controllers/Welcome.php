@@ -14,6 +14,7 @@ class Welcome extends CI_Controller {
 		$this->load->model('canchas_model');
 		$this->load->model('complejos_model');
 		$this->load->model('ciudades_model');
+		$this->load->model('jugadores_model');
 		$this->load->model('tipo_superficie_model');
 		$this->load->library('form_validation');
 		$this->load->library('pagination');
@@ -210,9 +211,14 @@ class Welcome extends CI_Controller {
 	}
 
 	public function nuevoPartido($id_reserva){
-		print_r($id_reserva);
+		
 		$partido = new Partidos_model();
-		$partido->nuevoPartido($id_reserva);
+		
+		$id_partido = $partido->nuevoPartido($id_reserva);
+
+		$id_usuario = $this->reservas_model->id_usuario($id_reserva);
+
+		$this->jugadores_model->administrador($id_usuario,$id_partido);
 	}
 
 	private function tieneSesion(){

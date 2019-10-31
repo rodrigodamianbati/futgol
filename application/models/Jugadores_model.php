@@ -20,4 +20,27 @@ class Jugadores_model extends Objeto_model {
         //print_r($this->db->last_query());
         return $query->result();
     }
+
+    public function administrador($id_usuario,$id_partido){
+        $this->db->query("INSERT INTO `jugador` (partido_id, usuario_id, permisos, administrador) VALUES('$id_partido', '$id_usuario', '1','1')");
+    }
+
+    public function es_administrador($id_partido,$id_usuario){
+        $this->db->select('j.administrador');
+        $this->db->from('jugador j');
+        $this->db->where('j.usuario_id',$id_usuario);
+        $this->db->where('j.partido_id',$id_partido);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function permisos($id_partido,$id_usuario){
+        $this->db->select('j.permisos');
+        $this->db->from('jugador j');
+        $this->db->where('j.usuario_id',$id_usuario);
+        $this->db->where('j.partido_id',$id_partido);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    
 }

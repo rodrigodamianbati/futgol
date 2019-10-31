@@ -24,6 +24,7 @@ class Partidos_model extends Objeto_model {
 
     public function nuevoPartido($id_reserva){
         $this->db->query("INSERT INTO `partido` (reserva_id) VALUES('$id_reserva')");
+        return $this->db->insert_id();
     }
 
     public function partido($id_partido){
@@ -89,9 +90,29 @@ class Partidos_model extends Objeto_model {
         $this->db->from('partido p');
         $this->db->join('reserva r', 'r.id = p.reserva_id');
         $this->db->join('cancha c', 'r.cancha_id = c.id');
-        $this->db->where('r.usuario_id', $_SESSION['data']['user_id']);
+        $this->db->join('jugador j', 'j.partido_id = p.id');
+        //$this->db->where('r.usuario_id', $_SESSION['data']['user_id']);
+        $this->db->where('j.usuario_id',$_SESSION['data']['user_id']);
         $query = $this->db->get();
         //print_r($this->db->last_query());
         return $query->result();
+    }
+
+    public function dar_permisos_invitacion($id_partido, $id_jugador){
+
+        $this->db->set('jugador.permisos', 1);
+        $this->db->where('jugador.partido_id', $id_partido);
+        $this->db->where('jugador.usuario_id', $id_jugador);
+        $this->db->update('jugador');
+        //print_r($this->db->last_query());
+    }
+
+    public function quitar_permisos_invitacion($id_partido, $id_jugador){
+
+        $this->db->set('jugador.permisos', 0);
+        $this->db->where('jugador.partido_id', $id_partido);
+        $this->db->where('jugador.usuario_id', $id_jugador);
+        $this->db->update('jugador');
+        //print_r($this->db->last_query());
     }
 }

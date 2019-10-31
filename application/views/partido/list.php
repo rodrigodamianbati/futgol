@@ -68,7 +68,7 @@
           <div class="box">
             <div class="box-header">
             <div class="row">
-            
+            <?php if(($this->session->es_admin == 1) || ($this->session->permisos == 1)) {?>
             <form action="<?= base_url('partidos/invitar'); ?>" method="post">
               <div class="col-md-2">
                 
@@ -83,10 +83,11 @@
               
               </div>
             </form>
+            <?php }?>
             <!-- /.box-header -->
             <h4><b>Listado jugadores</b></h4>
             <div class="box-body table-responsive no-padding">
-              <table class="table table-hover">
+              <table class="table">
                 <thead>
                   <th>Email</th>
                   <th>Nombre</th>
@@ -100,11 +101,37 @@
                     <td><?php echo $jugador->nombre; ?></td>
                     <td><?php echo $jugador->apellido; ?></td>
                     <td>
+                    <?php if($this->session->es_admin == 1) {?>
+                      <?php if( $jugador->usuario_id != $_SESSION['data']['user_id']) {?>
                       <form action="<?= base_url('partidos/cancelar_invitacion/');?>" method="post">
                       <input name="id_partido" type="hidden" value="<?php echo $this->uri->segment(3);?>">
                       <input name="id_jugador" type="hidden" value="<?php echo $jugador->id;?>">
                       <button class="btn btn-xs" href="#" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
                       </form>
+                      
+                      
+                      <form action="<?= base_url('partidos/dar_permisos_invitacion/');?>" method="post">
+                      <input name="id_partido" type="hidden" value="<?php echo $this->uri->segment(3);?>">
+                      <input name="id_jugador" type="hidden" value="<?php echo $jugador->id;?>">
+                      <input name="permisos" type="hidden" value="<?php echo $jugador->permisos;?>">
+                      
+                      
+
+                      <?php if($jugador->permisos == 0) {?>
+                      <button class="btn btn-xs" href="#" role="button" id="dar_permisos" name="dar_permisos"><span aria-hidden="true"></span>Dar permisos</button>
+                      <?php } else {?>
+                        <button class="btn btn-xs" href="#" role="button" id="dar_permisos" name="dar_permisos"><span aria-hidden="true"></span>Quitar permisos</button>
+                      </form>
+                      <?php } ?>
+                      <?php }?>
+                      <?php } elseif($jugador->usuario_id == $_SESSION['data']['user_id']){?>
+                        <form action="<?= base_url('partidos/cancelar_invitacion/');?>" method="post">
+                        <input name="id_partido" type="hidden" value="<?php echo $this->uri->segment(3);?>">
+                        <input name="id_jugador" type="hidden" value="<?php echo $jugador->id;?>">
+                       <button class="btn btn-xs" href="#" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                        </form>
+
+                      <?php }?>
                     </td>
                   </tr>
                   <?php endforeach; ?>

@@ -47,6 +47,14 @@ Class Reservas_model extends Objeto_model {
         return $query->result();
     }
 
+    public function id_usuario($id_reserva){
+      $this->db->select('u.id');
+      $this->db->from('reserva r');
+      $this->db->where('r.id',$id_reserva);
+      $query = $this->db->get();
+      return $query->result();
+    }
+
     public function listarReservasPedidas(){
       $this->db->select('r.* , u.*, u.nombre as usuario_nombre,u.apellido as usuario_apellido, co.nombre as complejo_nombre, c.nombre  as cancha_nombre ');
       $this->db->from('usuario u');
