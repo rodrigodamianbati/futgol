@@ -1,0 +1,3 @@
+CREATE TABLE `futgol`.`puntajes`( `id` INT(10) NOT NULL AUTO_INCREMENT, `partido_id` INT(10) NOT NULL, `jugador_id` INT(10) NOT NULL, `puntaje` INT(2) NOT NULL, PRIMARY KEY (`id`) );
+ALTER TABLE `futgol`.`puntaje` ADD COLUMN `id_usuario_votante` INT(10) NOT NULL AFTER `puntaje`;
+ALTER TABLE `futgol`.`puntaje` ADD CONSTRAINT `fk_puntaje_partido` FOREIGN KEY (`partido_id`) REFERENCES `futgol`.`partido`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION, ADD CONSTRAINT `fk_puntaje_jugador` FOREIGN KEY (`jugador_id`) REFERENCES `futgol`.`jugador`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION, ADD CONSTRAINT `fk_puntaje_usuario` FOREIGN KEY (`id_usuario_votante`) REFERENCES `futgol`.`usuario`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION;

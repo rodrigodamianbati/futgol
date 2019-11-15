@@ -16,7 +16,10 @@ class Partidos extends Protegido {
     }
 
     public function index(){
+	    //ini_set("display_errors", -1);
+	    //error_reporting(E_ALL);
         $partidos = $this->partidos_model->listarPorUsuario();
+        //print_r($partidos);exit();
         $fecha_hora_actual = date("Y-m-d H:i:s");
         $partidos_proximos = array();
         $partidos_anteriores = array();

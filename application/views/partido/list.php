@@ -55,7 +55,7 @@
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Administración de partidos</a></li>
-        <li class="active">Partido <?php echo $partido->id?></li>
+        <li class="active">Partido <?php echo $partido->id; ?></li>
       </ol>
     </section>
 
@@ -92,6 +92,7 @@
                   <th>Email</th>
                   <th>Nombre</th>
                   <th>Apellido</th>
+                  <th>Puntaje del Jugador</th>
                 </thead>
                 <tbody>
 
@@ -101,18 +102,27 @@
                     <td><?php echo $jugador->nombre; ?></td>
                     <td><?php echo $jugador->apellido; ?></td>
                     <td>
+                        <?php echo $jugador->puntaje;?>
+                        &nbsp;&nbsp;
+                        <?php if($jugador->voto != 1){ ?>
+                            <button type="button" class="btn btn-primary btn btn-xs" data-toggle="modal" data-target="#puntuarJugador" onclick="asignarJugadorPuntuar(<?php echo $jugador->jugador_id; ?>);">
+                                Puntuar Jugador
+                            </button>
+                        <?php } ?>
+                    </td>
+                    <td>
                     <?php if($this->session->es_admin == 1) {?>
                       <?php if( $jugador->usuario_id != $_SESSION['data']['user_id']) {?>
                       <form action="<?= base_url('partidos/cancelar_invitacion/');?>" method="post">
                       <input name="id_partido" type="hidden" value="<?php echo $this->uri->segment(3);?>">
-                      <input name="id_jugador" type="hidden" value="<?php echo $jugador->id;?>">
+                      <input name="id_jugador" type="hidden" value="<?php echo $jugador->jugador_id;?>">
                       <button class="btn btn-xs" href="#" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
                       </form>
                       
                       
                       <form action="<?= base_url('partidos/dar_permisos_invitacion/');?>" method="post">
                       <input name="id_partido" type="hidden" value="<?php echo $this->uri->segment(3);?>">
-                      <input name="id_jugador" type="hidden" value="<?php echo $jugador->id;?>">
+                      <input name="id_jugador" type="hidden" value="<?php echo $jugador->jugador_id;?>">
                       <input name="permisos" type="hidden" value="<?php echo $jugador->permisos;?>">
                       
                       
@@ -127,7 +137,7 @@
                       <?php } elseif($jugador->usuario_id == $_SESSION['data']['user_id']){?>
                         <form action="<?= base_url('partidos/cancelar_invitacion/');?>" method="post">
                         <input name="id_partido" type="hidden" value="<?php echo $this->uri->segment(3);?>">
-                        <input name="id_jugador" type="hidden" value="<?php echo $jugador->id;?>">
+                        <input name="id_jugador" type="hidden" value="<?php echo $jugador->jugador_id;?>">
                        <button class="btn btn-xs" href="#" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
                         </form>
 
@@ -162,6 +172,27 @@
             </div>
         </div>
 
+          <div class="modal fade" id="puntuarJugador" role="dialog" aria-labelledby="puntuarJugadorLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                          <h4 class="modal-title">Puntuar Jugador</h4>
+                      </div>
+                      <div class="modal-body">
+                          <input type="range"  name="puntaje" id="puntaje" min="1" max="10" step="1" value="5" onchange="mostrarPuntaje();">
+                            <br>
+                            <p>Puntaje Asignado: <b id="puntajeSeleccionado">5</b></p>
+                            <input type="hidden" id="jugadorPuntuar" name="jugadorPuntuar">
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                          <button type="button" class="btn btn-success" id="confirm" onclick="puntuarJugador();">Puntuar</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
         <script>
 
             $('#confirmDelete').on('show.bs.modal', function (e) {
@@ -171,9 +202,33 @@
             });
 
             function cancelarInvitacion() {
-                    $.post("<?php echo base_url() . 'partidos/cancelar_invitacion/' . $jugador->id;?>", function () {
+                    $.post("<?php echo base_url() . 'partidos/cancelar_invitacion/' . $jugador->jugador_id;?>", function () {
                         location.reload();
                     });
+            }
+
+            function asignarJugadorPuntuar(data){
+                $("#jugadorPuntuar").val(data);
+            }
+
+            function mostrarPuntaje(){
+                $("#puntajeSeleccionado").html($("#puntaje").val());
+            }
+
+            function puntuarJugador() {
+                $.post("<?php echo base_url() . 'jugadores/puntuar' ?>",
+                        {
+                            puntaje: $("#puntaje").val() ,
+                            jugador_id: $("#jugadorPuntuar").val(),
+                            partido_id: <?php echo $partido->id; ?>
+                        },
+                        function (data) {
+                            if(data == 1) {
+                                location.reload();
+                            }
+                        //console.log(data)
+                        }
+                );
             }
 
         </script>

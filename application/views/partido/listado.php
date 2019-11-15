@@ -67,7 +67,7 @@
                   <td> <?=$partido->nombre; ?>
                   <td><?= date("d/m/Y", strtotime($partido->fecha)); ?></td>
                   <td><?= date("H:i:s", strtotime($partido->fecha)); ?></td>
-                 <!-- <td> <a href="<?= base_url('partidos/administrar/'.$partido->id); ?>" class="btn btn-xs" role="button"><span aria-hidden="true">Administrar y ver detalles</span></a>-->
+                  <td> <a href="<?= base_url('partidos/administrar/'.$partido->id); ?>" class="btn btn-xs" role="button"><span aria-hidden="true">Administrar y ver detalles</span></a>
 
                   </td>
               </tr>

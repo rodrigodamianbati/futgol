@@ -42,11 +42,25 @@ class Partidos_model extends Objeto_model {
     }
 
     public function jugadores($id_partido){
-        $this->db->select('*');
+        $this->db->select('j.id as jugador_id, 
+                            u.id as usuario_id, 
+                            u.nombre, 
+                            u.apellido, 
+                            u.email, 
+                            truncate(  
+                            case
+                                when sum(p.puntaje) is null then 0
+                                else sum(p.puntaje)
+                            end, 0) as puntaje,
+                            (select 1 from puntaje pu where pu.`partido_id` = '.$id_partido.' and pu.id_usuario_votante = '.$_SESSION['data']['user_id'].') as voto'
+                            );
         $this->db->from('jugador j');
         $this->db->join('usuario u', 'j.usuario_id = u.id');
+        $this->db->join('puntaje p', 'p.jugador_id = j.id', 'left');
         $this->db->where('j.partido_id',$id_partido);
+        $this->db->group_by("j.id");
         $query = $this->db->get();
+        //print_r($this->db->last_query());exit();
         return $query->result();
     }
 
@@ -94,7 +108,7 @@ class Partidos_model extends Objeto_model {
         //$this->db->where('r.usuario_id', $_SESSION['data']['user_id']);
         $this->db->where('j.usuario_id',$_SESSION['data']['user_id']);
         $query = $this->db->get();
-        //print_r($this->db->last_query());
+        //print_r($this->db->last_query());exit();
         return $query->result();
     }
 
