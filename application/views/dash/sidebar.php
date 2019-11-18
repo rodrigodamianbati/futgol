@@ -26,17 +26,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php if ($this->session->data['rol']==2){ ?>
         <li class="header">ADMINISTRACION</li>
           <li class="active"><a href="<?= base_url('ciudades'); ?>"><i class="fa fa-table"></i> <span>Ciudades</span></a></li>
-          <li class="active"><a href="#"><i class="fa fa-address-book"></i> <span>Usuarios</span></a></li>
+          <li class="active"><a href="<?= base_url('usuarios'); ?>"><i class="fa fa-address-book"></i> <span>Usuarios</span></a></li>
         <?php } ?>
         <li class="header">JUGADOR</li>
         <li class="active"><a href="<?= base_url('reservas'); ?>"><i class="fa fa-calendar"></i> <span>Mis reservas</span></a></li>
         <li class="active"><a href="<?= base_url('invitaciones'); ?>"><i class="fa fa-user-plus"></i> <span>Mis invitaciones</span></a></li>
         <li class="active"><a href="<?= base_url('partidos'); ?>"><i class="fa fa-soccer-ball-o"></i> <span>Mis partidos</span></a></li>
+        <?php if ($this->session->data['rol']==2 || $this->session->data['rol']==3){ ?> 
         <li class="header">PROPIETARIO</li>
         <li class="active"><a href="<?= base_url('complejos'); ?>"><i class="fa fa-home"></i> <span>Mis complejos</span></a></li>
         <li class="active"><a href="<?= base_url('canchas'); ?>"><i class="fa fa-home"></i> <span>Mis canchas</span></a></li>
         <li class="active"><a href="<?= base_url('reservas/reservaspedidas'); ?>"><i class="fa fa-sun-o"></i> <span>Pedidos de reserva</span></a></li>
-
+        <?php } ?> 
 
       </ul>
       <!-- /.sidebar-menu -->

@@ -44,13 +44,19 @@ class Usuarios_model extends Objeto_model {
 
 	public function subir($id){
 		$user = $this->findById($id);
-		$user->rol_id = 2;
+		if ($user->rol_id ==1) 
+			$user->rol_id = 3; 
+		else 
+			$user->rol_id = 2;
 		$this->update($user, $id);
 	}
 
 	public function bajar($id){
 		$user = $this->findById($id);
-		$user->rol_id = 1;
+		if ($user->rol_id ==2) 
+			$user->rol_id = 3; 
+		else 
+			$user->rol_id = 1;
 		$this->update($user, $id);
 	}	
 
