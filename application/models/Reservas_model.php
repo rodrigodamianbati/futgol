@@ -48,11 +48,11 @@ Class Reservas_model extends Objeto_model {
     }
 
     public function id_usuario($id_reserva){
-      $this->db->select('u.id');
+      $this->db->select('r.usuario_id');
       $this->db->from('reserva r');
       $this->db->where('r.id',$id_reserva);
       $query = $this->db->get();
-      return $query->result();
+      return $query->result()[0]->usuario_id;
     }
 
     public function listarReservasPedidas(){

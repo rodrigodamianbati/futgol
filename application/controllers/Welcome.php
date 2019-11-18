@@ -218,6 +218,9 @@ class Welcome extends CI_Controller {
 
 		$id_usuario = $this->reservas_model->id_usuario($id_reserva);
 
+		//print_r($id_usuario);
+		//print_r($id_partido);
+
 		$this->jugadores_model->administrador($id_usuario,$id_partido);
 	}
 

@@ -22,7 +22,7 @@ class Jugadores_model extends Objeto_model {
     }
 
     public function administrador($id_usuario,$id_partido){
-        $this->db->query("INSERT INTO `jugador` (partido_id, usuario_id, permisos, administrador) VALUES('$id_partido', '$id_usuario', '1','1')");
+        $this->db->query("INSERT INTO `jugador` (partido_id, usuario_id, permisos, administrador) VALUES('$id_partido', '$id_usuario', 1,1)");
     }
 
     public function es_administrador($id_partido,$id_usuario){

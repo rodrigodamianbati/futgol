@@ -108,7 +108,6 @@ class Partidos_model extends Objeto_model {
         //$this->db->where('r.usuario_id', $_SESSION['data']['user_id']);
         $this->db->where('j.usuario_id',$_SESSION['data']['user_id']);
         $query = $this->db->get();
-        //print_r($this->db->last_query());exit();
         return $query->result();
     }
 
