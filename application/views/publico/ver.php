@@ -88,7 +88,7 @@
 										<input type="hidden" name="cancha_id" value="<?= $this->session->datos->cancha_id?>">
 										<input type="hidden" name="fecha" value="<?= $this->session->datos->fecha?>">
 										<input type="hidden" name="hora" value="<?= $this->session->datos->hora?>">
-							            <input type="submit" name="submit" id="submit" value="Reservar YA!" class="btn btn-primary" style="font-weight: bold;">
+							            <input type="submit" name="submit" id="submit" value="Reservar YA!" class="btn btn-primary" style="font-weight: bold;" <?php if ($this->session->penalizado) {  ?>disabled="true" <?} ?>>
 										<a class="btn btn-success" href="<?= base_url();?>welcome/lista/<?= $this->session->datos->pagina ?>" role="button" style="font-weight: bold;">Volver</a>
 									</form>
 								</div>
@@ -350,7 +350,14 @@
 
 
 				</div> <!-- row-->
+				<?php if ($this->session->penalizado) {  ?>
+				<div class="alert alert-danger">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<strong>Error! Usted no puede reservar una cancha en este complejo porque se encuentra suspendido hasta la fecha <?echo($this->session->fechasusp );?></strong>
 
+				</div>
+				<?} ?>
 			</div>
+
 		</div>
 

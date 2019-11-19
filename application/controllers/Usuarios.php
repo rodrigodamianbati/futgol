@@ -138,10 +138,14 @@ class Usuarios extends CI_Controller {
 		$postData->usuario = $this->input->post('usuario');
 		$postData->email = $this->input->post('email');
 		$postData->pwd = $this->input->post('password');
+		$postData->nombre = $this->input->post('usuario'); 
+		$postData->apellido = ' '; 
+		$postData->rol_id = 1; 
 
 		if($this->form_validation->run()==TRUE){
 			$postData->pwd = $postData->encriptar_pwd($postData->pwd);
 			$this->modelo->insert($postData);
+			//print_r($this->db->last_query());exit(); 
 			redirect('usuarios');
 
 		} else {

@@ -57,7 +57,15 @@ class Sesion extends CI_Controller {
 				//die;
 				$username = $usuario->nombre;
 				$rol = $usuario->rol_id;
-				$rol_name = ($rol==2)?'Administrador':'Cliente';
+				//$rol_name = ($rol==2)?'Administrador':'Cliente';
+				if ($rol==2){
+					$rol_name = 'Administrador';
+				}
+				else if ($rol==1){
+					$rol_name = 'Jugador';
+				} else {
+						$rol_name = 'Propietario';
+					}				
 	
 				$newdata = array(
 					'username'  => $username,

@@ -12,6 +12,7 @@ class Partidos extends Protegido {
         $this->load->model('reservas_model');
         $this->load->model('tipo_superficie_model');
         $this->load->model('jugadores_model');
+        $this->load->model('penalizados_model');
 		$this->load->helper('url');
     }
 
@@ -103,6 +104,35 @@ class Partidos extends Protegido {
     
         $email = $this->input->post('buscador_jugador');
         $id_partido = $this->input->post('id_partido');
+
+        			/////////////////////////////
+			$usuario_id=$this->partidos_model->usuario_dado_email($email);
+
+			$partido = $this->partidos_model->partido($id_partido);
+			$reserva = $this->reservas_model->reserva($partido->reserva_id);
+			$cancha = $this->canchas_model->getById($reserva->cancha_id)[0];
+
+			$usuariosPenalizados = $this->penalizados_model->buscarPenalizados($cancha->complejo_id	);
+			$penalizado=false;
+			$datosSesion = array(
+				'jugadorpenal'=>$penalizado,
+			);
+			 foreach ($usuariosPenalizados as $usuarioPenalizado):
+				 if($usuarioPenalizado->id == $usuario_id){
+					 $penalizado=true;
+					 $fecha=$usuarioPenalizado->fecha_hasta;
+					 $fecha_formato = date('d-m-Y', strtotime($fecha));
+					 $datosSesion = array(
+						 'jugadorpenal'=>$penalizado,
+						 'fechasusp' =>$fecha_formato
+					 );
+					 $this->session->set_userdata($datosSesion);
+					 redirect('/partidos/administrar/'.$id_partido, 'refresh');
+
+				 }
+			 endforeach;
+			 $this->session->set_userdata($datosSesion);
+			 /////////////////////////////
 
         $this->partidos_model->invitar($id_partido, $email);
 

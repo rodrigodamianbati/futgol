@@ -16,6 +16,7 @@ class Welcome extends CI_Controller {
 		$this->load->model('ciudades_model');
 		$this->load->model('jugadores_model');
 		$this->load->model('tipo_superficie_model');
+		$this->load->model('penalizados_model');
 		$this->load->library('form_validation');
 		$this->load->library('pagination');
 	}
@@ -148,7 +149,16 @@ class Welcome extends CI_Controller {
 
 		$cancha = $this->canchas_model->findById($data->cancha_id);
 		$complejo = $this->complejos_model->findById($cancha->complejo_id);
-		
+		//////
+		$usuariosPenalizados = $this->penalizados_model->buscarPenalizados($cancha->complejo_id	);
+		 $penalizado=false;
+		foreach ($usuariosPenalizados as $usuarioPenalizado):
+			if($usuarioPenalizado->id == $_SESSION['data']['user_id']){
+				$penalizado=true;
+				$fecha=$usuarioPenalizado->fecha_hasta;
+				$fecha_formato = date('d-m-Y', strtotime($fecha));
+			}
+		endforeach;
 
 		$data->servicios = $this->canchas_model->servicios($complejo->id);
 		$data->imagenes = $this->canchas_model->imagenes($complejo->id);
@@ -162,7 +172,9 @@ class Welcome extends CI_Controller {
 		//Agregar datos a sesión
 		$datosSesion = array(
 			'formulario'  => 'ver',
-			'datos'		=> $data
+			'datos'		=> $data,
+			'penalizado'=>$penalizado,
+			'fechasusp' =>$fecha_formato
 		);
 		$this->session->set_userdata($datosSesion);
 
