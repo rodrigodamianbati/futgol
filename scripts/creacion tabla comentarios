@@ -1,0 +1,7 @@
+CREATE TABLE comentarios (
+	id int not null auto_increment,
+    id_partido int not null,
+    id_jugador int not null,
+	comentario varchar(50),
+    primary key (id)
+) ENGINE=INNODB;

@@ -111,6 +111,14 @@ class Partidos_model extends Objeto_model {
         return $query->result();
     }
 
+    public function dameCOMentarios() {
+        $this->db->select('*');
+        $this->db->from('comentarios');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+
     public function dar_permisos_invitacion($id_partido, $id_jugador){
 
         $this->db->set('jugador.permisos', 1);
@@ -127,5 +135,9 @@ class Partidos_model extends Objeto_model {
         $this->db->where('jugador.usuario_id', $id_jugador);
         $this->db->update('jugador');
         //print_r($this->db->last_query());
+    }
+
+    public function comentar($id_partido, $comentario) {
+        $this->db->query("INSERT INTO comentarios (id_partido, id_jugador, comentario) VALUES($id_partido, 1, '$comentario')");
     }
 }

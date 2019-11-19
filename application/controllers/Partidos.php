@@ -19,6 +19,12 @@ class Partidos extends Protegido {
 	    //ini_set("display_errors", -1);
 	    //error_reporting(E_ALL);
         $partidos = $this->partidos_model->listarPorUsuario();
+
+        //comentarios
+        $comentarios = $this->partidos_model->dameCOmentarios();
+        $data['comentarios'] = $comentarios;
+
+    
         //print_r($partidos);exit();
         $fecha_hora_actual = date("Y-m-d H:i:s");
         $partidos_proximos = array();
@@ -143,5 +149,14 @@ class Partidos extends Protegido {
         $this->partidos_model->editarreglas($id_partido, $reglas);
 
     
+    }
+
+    public function comentar() {
+        $id_partido = $this->input->post('id_del_partido');
+        $comentario = $this->input->post('comentario_partido');
+
+        $this->partidos_model->comentar($id_partido, $comentario);
+
+        redirect('/partidos');
     }
 }  

@@ -28,6 +28,7 @@
             <th>Cancha</th>
             <th>Fecha</th>
             <th>Hora</th>
+            <th></th>
           </thead>
           <tbody>
             <?php foreach ($partidos_proximos as $partido): ?>
@@ -36,8 +37,71 @@
               <td><?= date("d/m/Y", strtotime($partido->fecha)); ?></td>
               <td><?= date("H:i:s", strtotime($partido->fecha)); ?></td>
               <td> <a href="<?= base_url('partidos/administrar/'.$partido->id); ?>" class="btn btn-xs" role="button"><span aria-hidden="true">Administrar y ver detalles</span></a>
-
               </td>
+              <td>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal<?php echo $partido->id?>">
+                  Comentar
+                </button>
+              </td>
+
+              <td>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#example<?php echo $partido->id?>">
+                  Ver comentarios
+                </button>
+              </td>
+
+              <div class="modal fade" id="example<?php echo $partido->id?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Comentarios del partido</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <?php foreach ($comentarios as $comentario): ?>
+                          <?php if ($comentario->id_partido == $partido->id): ?>
+                          
+                                <i class="icon-user"></i>
+                                <p><?php echo $comentario->comentario ?></p>
+                        
+
+                            <hr>
+                          <?php endif ?>
+                      <?php endforeach ?>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal<?php echo $partido->id?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Comentar partido</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <form action="<?= base_url('partidos/comentar'); ?>"" method="post">
+                      <div class="modal-body">
+                        <input type="text" value="<?php echo $partido->id ?>" class="hidden" id="id_del_partido" name="id_del_partido">
+                        <input type="text-area" placeholder="Comentar" id="comentario_partido" name="comentario_partido" style="width:100%">
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                        <button type="submit" class="btn btn-primary" >Enviar comentario</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
             </tr>
             <?php endforeach; ?>
           </tbody>
