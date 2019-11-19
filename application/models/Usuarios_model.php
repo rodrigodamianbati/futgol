@@ -36,7 +36,10 @@ class Usuarios_model extends Objeto_model {
 		$usuario->pwd = $pwd;
 		return $usuario;
 	}
-	
+	public function findById($id){
+		$query = $this->db->get_where('usuario', array('id' => $id, 'activo' => 1));
+		return $query->row();
+  }
 	
 	public function encriptar_pwd($pwd){
 		return crypt($pwd, PWD_SEMILLA);
@@ -70,6 +73,18 @@ class Usuarios_model extends Objeto_model {
 		$usuario = $this->findById($id);
 		$usuario->activo = 0;
 		$this->update($usuario, $id);        
+	}
+	public function buscar($buscar,$inicio = FALSE, $cantidadregistro = FALSE, $complejo_id ,$filtro)
+	{
+	  $this->db->like($filtro,$buscar);
+	  $this->db->where("usuario.id NOT IN (select pe.usuario_id from penalizado pe where complejo_id=".$complejo_id.") ");
+	  $this->db->where('usuario.id  !=', $_SESSION['data']['user_id']);
+  
+	  if ($inicio !== FALSE && $cantidadregistro !== FALSE) {
+		$this->db->limit($cantidadregistro,$inicio);
+	  }
+	  $consulta = $this->db->get("usuario");
+	  return $consulta->result();
 	}
 	
 }

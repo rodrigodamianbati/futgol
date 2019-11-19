@@ -1,3 +1,35 @@
+<div class="modal fade" id="invitacion_no_permitida" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Invitacion no permitida! El usuario fue suspendido del complejo hasta la fecha <? echo($this->session->fechasusp); ?></h4>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<?php if ($this->session->jugadorpenal) {
+  $datosSesion = array(
+    'jugadorpenal'=>false,
+  );
+  $this->session->set_userdata($datosSesion);
+   ?>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+      $('#invitacion_no_permitida').modal('show');
+    });
+
+</script>
+
+<?php } ?>
+<!------------------------------------------------------------------------------------>
+
+
+
 <div class="modal fade" id="invitacion_enviada" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">

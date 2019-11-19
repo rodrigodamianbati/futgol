@@ -25,6 +25,10 @@ class Complejos_model extends Objeto_model {
         $entidad->usuario_id = $_SESSION['data']['user_id'];
         return $entidad;
     }
+    public function findById($id){
+        $query = $this->db->get_where('complejo', array('id' => $id));
+        return $query->row();
+  }
 
     public function listarPorUsuario(){
         $this->db->select('c.*, ci.nombre as ciudad_nombre');
